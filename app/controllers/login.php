@@ -1,17 +1,17 @@
 <?php 
-class Auction extends Controller
+class Login extends Controller
 {
 	public function __construct()
 	{
 
 	}
 
-	public function index($name = "")
-	{
+	public function index($name = '')
+	{ 
 		/* DATABASE */
 		$db_langs = new Database("language", array(
 			"method"=>"select"
-		));
+		)); /* # */
 
 		$db_navigation = new Database("page", array(
 			"method"=>"select", 
@@ -39,7 +39,6 @@ class Auction extends Controller
 		$navigation = $this->model('_navigation');
 		$navigation->data = $db_navigation->getter();
 
-
 		/* header top */
 		$headertop = $this->model('_top');
 		$headertop->data["navigationModule"] = $navigation->index();
@@ -47,8 +46,9 @@ class Auction extends Controller
 		/*footer */
 		$footer = $this->model('_footer');
 
+
 		/* view */
-		$this->view('auction/index', [
+		$this->view('login/index', [
 			"header"=>array(
 				"website"=>Config::WEBSITE,
 				"public"=>Config::PUBLIC_FOLDER
@@ -56,7 +56,7 @@ class Auction extends Controller
 			"headerModule"=>$header->index(), 
 			"headertop"=>$headertop->index(), 
 			"pageData"=>$db_pagedata->getter(), 
-			"footer"=>$footer->index() 
+			"footer"=>$footer->index()
 		]);
 	}
 }

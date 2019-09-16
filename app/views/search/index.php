@@ -1,71 +1,65 @@
-<?php
+<?php 
 require_once("app/functions/l.php"); 
-require_once("app/functions/strip_output.php");
-require_once("app/functions/strings.php");
-require_once("app/functions/breadcrups.php");
-$l = new functions\l();
+require_once("app/functions/strings.php"); 
+require_once("app/functions/strip_output.php"); 
+// require_once("app/functions/menu_data.php"); 
+// $menu_data = new functions\menu_data(); 
+$l = new functions\l(); 
 $string = new functions\strings(); 
-echo $data['headerModule']; 
-echo $data['headertop']; 
-// $searchText = htmlspecialchars(strip_tags($data['searchText']));
+echo $data['headerModule'];// assets
+echo $data['headertop'];// assets
+
 ?>
 
-<div class="l-main">
-	<div class="l-content">
-		<a id="main-content"></a>
-		<h1 class="page-title"><?=$l->translate("search")?></h1>
-
-		<form class="search-form search-form" action="?" method="get" id="search-form" accept-charset="UTF-8">
-			<div>
-				<div class="container-inline form-wrapper" id="edit-basic">
-					<div class="form-item form-type-textfield form-item-keys">
-						<!-- <label for="edit-keys">Enter your keywords </label> -->
-						<input type="text" id="edit-keys" name="w" value="<?=$data["word"]?>" size="40" maxlength="255" class="form-text" placeholder="<?=$l->translate("keyword")?>" autocomplete="off" style="outline: none">
-					</div>
-					<input type="button" id="edit-submit" name="op" value="Search" class="form-submit">
-				</div>
+<main>
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-md-12 g-feedback-page">
+				<h2>ძიება</h2>
+				<p>საკვანძო სიტყვა: <?=$data["word"]?></p>
 			</div>
-		</form>
 
-		<?php
-		// echo "<pre>";
-		// print_r($data["search"]);
-		// echo "</pre>";
-		?>
+			<div class="col-md-12">
+				<blockquote class="blockquote">
+					<p class="mb-0"><a href="">ოქროს სამაჯური</a></p>
+					<footer class="blockquote-footer">აუქციონი</footer>
+				</blockquote>
 
-		<div class="g-results">
-			<ul>
-				<?php 
-				foreach ($data["search"] as $value):
-					$url = "";
-					if($value["page_type"]=="text"){
-						$url = Config::WEBSITE.$_SESSION["LANG"]."/".$value["page_slug"];
-					}
-					if($value["page_type"]=="news"){
-						$url = Config::WEBSITE.$_SESSION["LANG"]."/news/".(int)$value["page_idx"]."/".urlencode($value["page_title"]);
-					}
-				?>
-				<li>
-					<a href="<?=$url?>">
-						<h3><?=$value["page_title"]?></h3>
-						<p><?=$string->cut(strip_tags($value["page_text"]), 420)?></p>
-						<strong><?=urldecode($url)?></strong>
-					</a>
-				</li>
-				<?php endforeach; ?>
-			</ul>
+				<blockquote class="blockquote">
+					<p class="mb-0"><a href="">ოქროს სამაჯური</a></p>
+					<footer class="blockquote-footer">წილები</footer>
+				</blockquote>
+
+				<blockquote class="blockquote">
+					<p class="mb-0"><a href="">ოქროს სამაჯური</a></p>
+					<footer class="blockquote-footer">ინვესტირება</footer>
+				</blockquote>
+
+				<div class="margin-top-40"></div>
+
+			</div>
+
+			<div class="col-md-12">
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination">
+				    <li class="page-item"><a class="page-link" href="#">უკან</a></li>
+				    <li class="page-item"><a class="page-link" href="#">1</a></li>
+				    <li class="page-item"><a class="page-link" href="#">2</a></li>
+				    <li class="page-item"><a class="page-link" href="#">3</a></li>
+				    <li class="page-item"><a class="page-link" href="#">წინ</a></li>
+				  </ul>
+				</nav>
+			</div>
+
 		</div>
 
-
 	</div>
-</div>
-
+</main>
 
 
 <?=$data['footer']?>
 
-<script type="text/javascript">
-	jQuery("body").removeClass("front");
-</script>
+
 </body>
 </html>

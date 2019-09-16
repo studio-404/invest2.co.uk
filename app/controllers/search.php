@@ -19,20 +19,15 @@ class Search extends Controller
 			); 
 		}
 
-		$db_search = new Database("searchBy", array(
-			"method"=>"select", 
-			"word"=>$word,
-			"lang"=>$_SESSION['LANG']
-		));
+		// $db_search = new Database("searchBy", array(
+		// 	"method"=>"select", 
+		// 	"word"=>$word,
+		// 	"lang"=>$_SESSION['LANG']
+		// ));
 
 		/* DATABASE */
 		$db_langs = new Database("language", array(
 			"method"=>"select"
-		));
-
-		$db_contactdetails = new Database("modules", array(
-			"method"=>"selectModuleByType", 
-			"type"=>"contactdetails"
 		));
 	
 
@@ -44,11 +39,6 @@ class Search extends Controller
 			"status"=>0 
 		));
 
-		$db_usefulllinks = new Database("modules", array(
-			"method"=>"selectModuleByType", 
-			"type"=>"usefulllinks"
-		));
-
 		$s = (isset($_SESSION["URL"][1])) ? $_SESSION["URL"][1] : Config::MAIN_CLASS;
 		$db_pagedata = new Database("page", array(
 			"method"=>"selecteBySlug", 
@@ -56,17 +46,7 @@ class Search extends Controller
 			"lang"=>$_SESSION['LANG'], 
 			"all"=>true
 		));
-
-		$db_socialnetworks = new Database("modules", array(
-			"method"=>"selectModuleByType", 
-			"type"=>"socialnetworks"
-		));
 		
-		$db_footerHelpNav = new Database("page", array(
-			"method"=>"selecteByCid", 
-			"cid"=>7, 
-			"lang"=>$_SESSION['LANG']
-		));
 
 		/* HEDARE */
 		$header = $this->model('_header');
@@ -81,31 +61,13 @@ class Search extends Controller
 		/* NAVIGATION Footer */
 		$navigation_footer = $this->model('_navigation');
 		$navigation_footer->data = $db_navigation->getter();
-		$navigation_footer->footerNavigation = true;
 
 		/* header top */
 		$headertop = $this->model('_top');
-		$headertop->data["contactdetails"] = $db_contactdetails->getter();
 		$headertop->data["navigationModule"] = $navigation->index();
 
 		/*footer */
 		$footer = $this->model('_footer');
-		$footer->data["contactdetails"] = $db_contactdetails->getter();
-		$footer->data["footerHelpNav"] = $db_footerHelpNav->getter();
-		$footer->data["usefulllinks"] = $db_usefulllinks->getter();
-		$footer->data["socialnetworks"] = $db_socialnetworks->getter();
-		$footer->data["footer_navigation"] = $navigation_footer->index(); /* # */
-
-		$pageDatax = $db_pagedata->getter();
-		
-		$db_dub_navigation = new Database("page", array(
-			"method"=>"select", 
-			"cid"=>$pageDatax['idx'], 
-			"nav_type"=>0,
-			"lang"=>$_SESSION['LANG'],
-			"status"=>0 
-		));
-
 		
 	
 		/* view */
@@ -115,11 +77,9 @@ class Search extends Controller
 				"public"=>Config::PUBLIC_FOLDER
 			),
 			"headerModule"=>$header->index(), 
-			"pageData"=>$pageDatax, 
 			"headertop"=>$headertop->index(), 
-			"sub_navigation"=>$db_dub_navigation->getter(), 
+			"pageData"=>$db_pagedata->getter(), 
 			"word"=>$word, 
-			"search"=>$db_search->getter(), 
 			"footer"=>$footer->index() 
 		]);
 	}

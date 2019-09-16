@@ -17,35 +17,29 @@ $_SESSION['protect_x'] = $string::random(8);
 		<div class="row">
 			
 			<div class="col-md-12 g-feedback-page">
-				<h2>დამატებითი კითხვების, შენიშვნების, რჩევების შემთხვევაში მოგვწერეთ</h2>
+				<h2>რეგისტრაცია</h2>
+				<p>ნაბიჯი 1</p>
+				<div class="progress">
+				  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+				</div>
 			</div>
 
 			<div class="col-md-12">
 				<form>
 				  <div class="form-group g-error">
-				    <label for="">სახელი</label>
-				    <input type="text" class="form-control" />
-				    <div class="error">სახელის ველი სავალდებულოა!</div>
+				    <label for="">მობილურის ნომერი</label>
+				    <div class="input-group">
+				    	<div class="input-group-prepend">
+				          <div class="input-group-text">+995</div>
+				        </div>
+				        <input type="text" class="form-control" placeholder="599..." />
+				    </div>				    
+				    <div class="error">მობილურის ნომრის ველი სავალდებულოა!</div>
 				  </div>
 				  <div class="form-group">
-				    <label for="">ელ-ფოსტა</label>
-				    <input type="email" class="form-control" />
+				    <label for="">პაროლი</label>
+				    <input type="password" class="form-control" />
 				    <div class="error">ელ-ფოსტის ველი სავალდებულოა!</div>
-				  </div>
-				  <div class="form-group">
-				    <label for="">კატეგორია</label>
-				    <select class="form-control">
-				      <option>კითხვა</option>
-				      <option>შენიშვნა</option>
-				      <option>რჩევა</option>
-				      <option>სხვა</option>
-				    </select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label>შეტყობინება</label>
-				    <textarea class="form-control" rows="3"></textarea>
-				    <div class="error">შეტყობინების ველი სავალდებულოა!</div>
 				  </div>
 
 				  <div class="row">
@@ -61,7 +55,7 @@ $_SESSION['protect_x'] = $string::random(8);
 				  	</div>
 				  </div>
 
-				  <button type="submit" class="btn btn-primary mb-2">გაგზავნა</button>
+				  <button type="submit" class="btn btn-primary mb-2">შემდეგი</button>
 				</form>
 
 				<div class="margin-top-40"></div>

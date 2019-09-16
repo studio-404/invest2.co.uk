@@ -25,7 +25,9 @@ class _navigation
 				
 				if($subNavigation->getter()){				
 										
-				}else{					
+				}else{	
+					$active = (isset($_SESSION["URL"][1]) && $_SESSION["URL"][1]==$value['slug']) ? " active" : "";
+
 					if(isset($value['redirect']) && $value['redirect']!=""){
 						$out .= sprintf(
 							"<li class=\"nav-item\"><a href=\"%s\" class=\"nav-link\">%s</a></li>\n",
@@ -34,7 +36,8 @@ class _navigation
 						);
 					}else{
 						$out .= sprintf(
-							"<li class=\"nav-item\"><a href=\"%s%s/%s\" class=\"nav-link\">%s</a></li>\n",
+							"<li class=\"nav-item %s\"><a href=\"%s%s/%s\" class=\"nav-link\">%s</a></li>\n",
+							$active, 
 							Config::WEBSITE,
 							strip_output::index($_SESSION['LANG']),
 							strip_output::index($value['slug']),
@@ -53,9 +56,18 @@ class _navigation
 		$out .= "სისტემაში შესვლა\n";
 		$out .= "</a>\n";
 		$out .= "<div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"bd-versions\">\n";
-		$out .= "<a class=\"dropdown-item\" href=\"#\">შესვლა</a>\n";
-		$out .= "<a class=\"dropdown-item\" href=\"#\">რეგისტრაცია</a>\n";
-		$out .= "<a class=\"dropdown-item\" href=\"#\">პაროლის აღდგენა</a>\n";
+		$out .= sprintf(
+			"<a class=\"dropdown-item\" href=\"/%s\">შესვლა</a>\n",
+			$_SESSION["LANG"]."/login"
+		);
+		$out .= sprintf(
+			"<a class=\"dropdown-item\" href=\"/%s\">რეგისტრაცია</a>\n",
+			$_SESSION["LANG"]."/registration"	
+		);
+		$out .= sprintf(
+			"<a class=\"dropdown-item\" href=\"/%s\">პაროლის აღდგენა</a>\n",
+			$_SESSION["LANG"]."/recover-password"
+		);
 		$out .= "</div>\n";
 		$out .= "</li>\n";
 		$out .= "</ul>\n";

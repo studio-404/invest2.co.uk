@@ -23,14 +23,13 @@ class Protect extends Controller
 		$string = (isset($_SESSION['protect_x'])) ? $_SESSION['protect_x'] : 123456;
 		$bg = imagecolorallocate($im, 242, 243, 246);
 		$red = imagecolorallocate($im, 51, 51, 51);
-		$linecolor = imagecolorallocate($im, 0, 51, 153);
-		for($i=0; $i < 6; $i++) {
+		$linecolor = imagecolorallocate($im, 0, 123, 255);
+		for($i=0; $i < 4; $i++) {
 		imagesetthickness($im, 1);
 		imageline($im, 0, rand(0,30), 120, rand(0,30), $linecolor);
 		}
 
-		imagestring($im, 55, 30, 15, $string, $red);
-
+		imagestring($im, 45, 10, 10, $string, $red);
 
 
 		$filename = sha1("_".time().$_SERVER["REMOTE_ADDR"]).".png";
