@@ -55,6 +55,7 @@ class _navigation
 		$out .= "<div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"bd-versions\">\n";
 		$out .= "<a class=\"dropdown-item\" href=\"#\">შესვლა</a>\n";
 		$out .= "<a class=\"dropdown-item\" href=\"#\">რეგისტრაცია</a>\n";
+		$out .= "<a class=\"dropdown-item\" href=\"#\">პაროლის აღდგენა</a>\n";
 		$out .= "</div>\n";
 		$out .= "</li>\n";
 		$out .= "</ul>\n";

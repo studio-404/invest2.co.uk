@@ -11,7 +11,7 @@ class _footer
 		$l = new functions\l(); 
 		$out = "<footer class=\"footer mt-auto py-3\">";
 		$out .= "<div class=\"container\">";
-		$out .= "<span class=\"text-muted\">Place sticky footer content here.</span>";
+		$out .= "<span class=\"text-muted\">&copy; 2019 invest2.co.uk ყველა უფლება დაცულია.</span>";
 		$out .= "</div>";
 		$out .= "</footer>";
 

@@ -13,23 +13,12 @@ class Faq extends Controller
 			"method"=>"select"
 		));
 
-		$db_socials = new Database("modules", array(
-			"method"=>"selectModuleByType", 
-			"type"=>"social"
-		));
-
 		$db_navigation = new Database("page", array(
 			"method"=>"select", 
 			"cid"=>0, 
 			"nav_type"=>0,
 			"lang"=>$_SESSION['LANG'],
 			"status"=>0 
-		));
-
-		$db_footerHelpNav = new Database("page", array(
-			"method"=>"selecteByCid", 
-			"cid"=>5, 
-			"lang"=>$_SESSION['LANG']
 		));
 
 		$s = (isset($_SESSION["URL"][1])) ? $_SESSION["URL"][1] : Config::MAIN_CLASS;
@@ -63,21 +52,13 @@ class Faq extends Controller
 		$faq = $this->model('_faq');
 		$faq->data = $db_faq->getter();
 
-
-		/* SOCIAL */
-		$social = $this->model('_social');
-		$social->networks = $db_socials->getter();  
-
 		/* header top */
 		$headertop = $this->model('_top');
-		$headertop->data["socialNetworksModule"] = $social->index();
 		$headertop->data["languagesModule"] = $languages->index();
 		$headertop->data["navigationModule"] = $navigation->index();
 
 		/*footer */
 		$footer = $this->model('_footer');
-		$footer->data["socialNetworksModule"] = $social->index();
-		$footer->data["footerHelpNav"] = $db_footerHelpNav->getter();
 
 		/* view */
 		$this->view('faq/index', [
