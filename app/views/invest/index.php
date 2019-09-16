@@ -34,7 +34,7 @@ echo $data['headertop'];// assets
 						  <div class="progress-bar" role="progressbar" style="width: 25.5%;" aria-valuenow="25.5" aria-valuemin="0" aria-valuemax="100">25.5%</div>
 						</div>
 				    </p>
-				    <a href="#" class="btn btn-primary">სრულად</a>
+				    <a href="/<?=$_SESSION["LANG"]?>/invest/read/125/<?=urlencode("ოქროს საინვესტიციო მონეტა")?>" class="btn btn-primary">სრულად</a>
 				  </div>
 				</div>
 			</div>
@@ -55,7 +55,7 @@ echo $data['headertop'];// assets
 						  <div class="progress-bar" role="progressbar" style="width: 82.5%;" aria-valuenow="82.5" aria-valuemin="0" aria-valuemax="100">82.5%</div>
 						</div>
 				    </p>
-				    <a href="#" class="btn btn-primary">სრულად</a>
+				    <a href="/<?=$_SESSION["LANG"]?>/invest/read/125/<?=urlencode("ოქროს საინვესტიციო მონეტა")?>" class="btn btn-primary">სრულად</a>
 				  </div>
 				</div>
 			</div>
@@ -75,7 +75,7 @@ echo $data['headertop'];// assets
 						  <div class="progress-bar" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">15%</div>
 						</div>
 				    </p>
-				    <a href="#" class="btn btn-primary">სრულად</a>
+				    <a href="/<?=$_SESSION["LANG"]?>/invest/read/125/<?=urlencode("ოქროს საინვესტიციო მონეტა")?>" class="btn btn-primary">სრულად</a>
 				  </div>
 				</div>
 			</div>
@@ -97,7 +97,7 @@ echo $data['headertop'];// assets
 						  <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
 						</div>
 				    </p>
-				    <a href="#" class="btn btn-primary">სრულად</a>
+				    <a href="/<?=$_SESSION["LANG"]?>/invest/read/125/<?=urlencode("ოქროს საინვესტიციო მონეტა")?>" class="btn btn-primary">სრულად</a>
 				  </div>
 				</div>
 			</div>

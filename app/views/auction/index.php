@@ -27,7 +27,7 @@ echo $data['headertop'];
 				    	<b>დიამეტრი: </b><span>28 მმ</span><br><br>				    	
 				    	<b>დასრულებამდე: </b><span>დარჩა 9 საათი 35 წუთი</span>
 				    </p>
-				    <a href="#" class="btn btn-primary">სრულად</a>
+				    <a href="/<?=$_SESSION["LANG"]?>/auction/read/125/<?=urlencode("ოქროს საინვესტიციო მონეტა")?>" class="btn btn-primary">სრულად</a>
 				  </div>
 				</div>
 			</div>

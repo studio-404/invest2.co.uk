@@ -34,9 +34,10 @@ class App{
 
 		if(!isset($url[1])){ $url[1] = $this->controller; }
 
+
 		$pluginUrl = str_replace("-", "", $url[1]);
 
-		// echo $pluginUrl;
+		
 		if(file_exists('app/controllers/'. $pluginUrl.'.php')){
 			$this->controller = $pluginUrl;
 			unset($url[1]);
@@ -70,11 +71,10 @@ class App{
 		}
 
 
-		// echo 'app/controllers/'.$this->controller.'.php';
 		require_once 'app/controllers/'.$this->controller.'.php';
 
 		$this->controller = new $this->controller;
-
+		
 		if(isset($url[2]))
 		{
 			if(method_exists($this->controller, $url[2])){
@@ -84,6 +84,8 @@ class App{
 				$this->method = "index"; 
 			}
 		}
+
+
 
 		$this->params = $url ? array_values($url) : [];
 

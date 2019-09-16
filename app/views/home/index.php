@@ -17,7 +17,7 @@ echo $data['headertop'];// assets
 			<div class="col-md-12 px-0">
 				<h1 class="font-italic">ინვესტიცია თანამედროვე ეკონომიკის განუყოფელი ნაწილია</h1>
 				<p class="lead my-3">პლათფორმა “ინვესტორი” საშუალებას აძლევს ნებისმიერ მომხმარებელს ისეთი მცირე თანხით როგორიც 10 ლარია განახორციელოს ინვესტირება ძვირადღირებულ პროდუქტებში: ოქრო, ვერცხლი, საინვესტიციო მონეტები, მიწის ნაკვეთები, ბინბი და ა.შ.</p>
-				<p class="lead mb-0"><a href="#" class="text-white font-weight-bold">განაგრძე კითხვა...</a></p>
+				<p class="lead mb-0"><a href="/<?=$_SESSION["LANG"]?>/aboutus" class="text-white font-weight-bold">განაგრძე კითხვა...</a></p>
 			</div>
 		</div>
 

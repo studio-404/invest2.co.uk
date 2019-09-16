@@ -34,7 +34,7 @@ echo $data['headertop'];// assets
 						  <div class="progress-bar" role="progressbar" style="width: 0.5%;" aria-valuenow="0.5" aria-valuemin="0" aria-valuemax="100">0.5%</div>
 						</div>
 				    </p>
-				    <a href="#" class="btn btn-primary">სრულად</a>
+				    <a href="/<?=$_SESSION["LANG"]?>/shares/read/125/<?=urlencode("ოქროს საინვესტიციო მონეტა 15%")?>" class="btn btn-primary">სრულად</a>
 				  </div>
 				</div>
 			</div>
