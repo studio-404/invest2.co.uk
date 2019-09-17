@@ -84,7 +84,7 @@ class _header
 		$out .= "<meta property=\"og:type\" content=\"website\" />\n";
 		$out .= sprintf("<meta property=\"og:url\" content=\"%s\" />\n", $actual_link);
 
-		$out .= sprintf("<link rel=\"shortcut icon\" href=\"%spublic/images/icons/favicon.png?v=%s\" type=\"image/ico\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
+		$out .= sprintf("<link rel=\"shortcut icon\" href=\"%spublic/img/favicon-32x32.png?v=%s\" type=\"image/ico\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
 
 		$out .= sprintf("<title>%s</title>\n", $title);
 

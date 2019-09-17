@@ -1,4 +1,8 @@
 <?php
+/*
+TABLE: users_website
+COLUMNS:  id | register_date | register_ip   | email | mobile | password | firstname | lastname | status
+*/
 class user
 {
 	public function index($conn, $args)

@@ -3,14 +3,10 @@ class Protect extends Controller
 {
 	public function __construct()
 	{
-		if(!isset($_SESSION['call'])){
-			$_SESSION['call'] = 1;
-		}else{
-			$_SESSION['call'] = $_SESSION['call'] + 1;
-		}
-
-		if($_SESSION['call']>5000){
-			die("Just Get Out !");
+		require_once 'app/functions/request.php';
+		$hash = functions\request::index("GET","hash");
+		if($hash!==$_SESSION["protect_hash"]){
+			die('Error');
 		}
 	}
 
