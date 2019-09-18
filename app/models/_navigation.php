@@ -51,25 +51,44 @@ class _navigation
 		$out .= "</ul>\n";	
 
 		$out .= "<ul class=\"navbar-nav flex-row ml-md-auto d-none d-md-flex\">";	
-		$out .= "<li class=\"nav-item dropdown\">\n";
-		$out .= "<a class=\"nav-item nav-link dropdown-toggle mr-md-2\" href=\"#\" id=\"bd-versions\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n";
-		$out .= "სისტემაში შესვლა\n";
-		$out .= "</a>\n";
-		$out .= "<div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"bd-versions\">\n";
-		$out .= sprintf(
-			"<a class=\"dropdown-item\" href=\"/%s\">შესვლა</a>\n",
-			$_SESSION["LANG"]."/login"
-		);
-		$out .= sprintf(
-			"<a class=\"dropdown-item\" href=\"/%s\">რეგისტრაცია</a>\n",
-			$_SESSION["LANG"]."/registration"	
-		);
-		$out .= sprintf(
-			"<a class=\"dropdown-item\" href=\"/%s\">პაროლის აღდგენა</a>\n",
-			$_SESSION["LANG"]."/recover-password"
-		);
-		$out .= "</div>\n";
-		$out .= "</li>\n";
+		if(isset($_SESSION[Config::SESSION_PREFIX."userdata"])){
+			$out .= "<li class=\"nav-item dropdown\">\n";
+			$out .= "<a class=\"nav-item nav-link dropdown-toggle mr-md-2\" href=\"#\" id=\"bd-versions\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n";
+			$out .= sprintf(
+				"გამარჯობა, %s\n",
+				$_SESSION[Config::SESSION_PREFIX."userdata"]["firstname"]
+			);
+			$out .= "</a>\n";
+			$out .= "<div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"bd-versions\">\n";
+
+			$out .= sprintf(
+				"<a class=\"dropdown-item g-logout\" href=\"javascript:void(0)\">სისტემიდან გასვლა</a>\n"
+			);
+			
+			
+			$out .= "</div>\n";
+			$out .= "</li>\n";
+		}else{
+			$out .= "<li class=\"nav-item dropdown\">\n";
+			$out .= "<a class=\"nav-item nav-link dropdown-toggle mr-md-2\" href=\"#\" id=\"bd-versions\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n";
+			$out .= "სისტემაში შესვლა\n";
+			$out .= "</a>\n";
+			$out .= "<div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"bd-versions\">\n";
+			$out .= sprintf(
+				"<a class=\"dropdown-item\" href=\"/%s\">შესვლა</a>\n",
+				$_SESSION["LANG"]."/login"
+			);
+			$out .= sprintf(
+				"<a class=\"dropdown-item\" href=\"/%s\">რეგისტრაცია</a>\n",
+				$_SESSION["LANG"]."/registration"	
+			);
+			$out .= sprintf(
+				"<a class=\"dropdown-item\" href=\"/%s\">პაროლის აღდგენა</a>\n",
+				$_SESSION["LANG"]."/recover-password"
+			);
+			$out .= "</div>\n";
+			$out .= "</li>\n";
+		}
 		$out .= "</ul>\n";
 		
 		return $out;

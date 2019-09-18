@@ -9,7 +9,7 @@ $string = new functions\strings();
 echo $data['headerModule'];// assets
 echo $data['headertop'];// assets
 
-$_SESSION['protect_x'] = $string::random(8);
+$_SESSION['protect_x'] = $string::random(4);
 ?>
 
 <main>
@@ -21,38 +21,38 @@ $_SESSION['protect_x'] = $string::random(8);
 			</div>
 
 			<div class="col-md-12">
-				<form action="<?=Config::WEBSITE?>" method="POST">
+				<form action="<?=Config::WEBSITE?>" method="POST" id="g-form-login">
 				  <div class="form-group g-mobile-box">
-				    <label for="">მობილურის ნომერი</label>
+				    <label for="">მობილურის ნომერი <font color="red">*</font></label>
 				    <div class="input-group">
 				    	<div class="input-group-prepend">
 				          <div class="input-group-text">+995</div>
 				        </div>
 				        <input type="text" class="form-control" name="mobile" placeholder="599..." value="" />
 				    </div>				    
-				    <div class="error">მობილურის ნომრის ველი სავალდებულოა!</div>
 				  </div>
 				  <div class="form-group g-password-box">
-				    <label for="">პაროლი</label>
+				    <label for="">პაროლი <font color="red">*</font></label>
 				    <input type="password" class="form-control" name="password" value="" />
-				    <div class="error">ელ-ფოსტის ველი სავალდებულოა!</div>
 				  </div>
 
 				  <div class="row">
 				  	<div class="col-md-8">
 				  		<div class="form-group g-code-box">
-							<label for="">შეიყვანეთ დამცავი კოდი</label>
+							<label for="">შეიყვანეთ დამცავი კოდი <font color="red">*</font></label>
 							<input type="text" class="form-control" name="code" value="" />
-							<div class="error">დამცავი ველის ველი სავალდებულოა!</div>
 						</div>
 				  	</div>
-				  	<div class="col-md-4">
+				  	<div class="col-md-2">
 				  		<?php $_SESSION["protect_hash"] = md5(sha1("s".time())); ?>
 				  		<img src="/<?=$_SESSION["LANG"]?>/protect?hash=<?=$_SESSION["protect_hash"]?>" alt="" class="protect-img" />
+				  		<a href="javascript:void(0)" class="g-realod-protect" data-img="protect-img"><i class="fa fa-refresh"></i></a>
 				  	</div>
 				  </div>
 
-				  <button type="button" class="btn btn-primary mb-2 g-login-button">შესვლა</button>
+				  <button type="button" class="btn btn-primary mb-2 g-login-button" modal-title="შეტყობინება">
+				  	<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span><span>შესვლა</span>
+				  </button>
 				</form>
 
 				<div class="margin-top-40"></div>

@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'BPGAlgeti';
   src: url('../../fonts/web/BPGAlgeti.eot?#iefix') format('embedded-opentype'),  
+  		url('../../fonts/web/BPGAlgeti.otf')  format('opentype'),
 		url('../../fonts/web/BPGAlgeti.woff') format('woff'), 
 		url('../../fonts/web/BPGAlgeti.ttf')  format('truetype'), 
 		url('../../fonts/web/BPGAlgeti.svg#BPGAlgeti') format('svg');

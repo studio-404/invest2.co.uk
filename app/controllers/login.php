@@ -3,7 +3,9 @@ class Login extends Controller
 {
 	public function __construct()
 	{
-
+		if(isset($_SESSION[Config::SESSION_PREFIX."userdata"])){
+			unset($_SESSION[Config::SESSION_PREFIX."userdata"]);
+		}
 	}
 
 	public function index($name = '')

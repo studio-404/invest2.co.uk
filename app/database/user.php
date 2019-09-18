@@ -17,6 +17,30 @@ class user
 		return $out;
 	}
 
+	private function logintry($args)
+	{
+		$fetch = array();
+		$sql = 'SELECT 
+		* 
+		FROM 
+		`users_website` 
+		WHERE 
+		`mobile`=:mobile AND
+		`password`=:password AND
+		`status`!=:one';
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":mobile"=>$args["mobile"], 
+			":password"=>$args["password"], 
+			":one"=>1 
+		));
+		
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
 	private function select($args)
 	{
 		$fetch = array();

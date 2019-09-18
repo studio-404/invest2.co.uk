@@ -31,10 +31,11 @@ class _header
 
 		$out = "<!DOCTYPE html>\n";
 				
+		$out .= "<html lang=\"en\">\n";
 		$out .= "<head>\n";
 		
 		$out .= "<meta charset=\"utf-8\" />\n";
-		$out .= sprintf("<base url=\"%s\">\n", Config::WEBSITE);
+		$out .= sprintf("<base href=\"%s\">\n", Config::WEBSITE);
 		
 		$out .= sprintf(
 			"<link rel=\"alternate\" type=\"application/rss+xml\" title=\"\" href=\"%srss.php?v=%s\" />\n",
@@ -92,14 +93,20 @@ class _header
 		
 		$out .= sprintf("<link type=\"text/css\" rel=\"stylesheet\" href=\"%spublic/css/web/sticky-footer-navbar.css?v=%s\" media=\"all\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
 		
+		$out .= sprintf("<link type=\"text/css\" rel=\"stylesheet\" href=\"%spublic/css/web/fontawesome.css?v=%s\" media=\"all\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
+
 		$out .= sprintf("<link type=\"text/css\" rel=\"stylesheet\" href=\"%spublic/css/web/general.css?v=%s\" media=\"all\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
 
 		if(isset($_SESSION['LANG']) && $_SESSION['LANG']=="ge"){
 			$out .= sprintf("<link type=\"text/css\" rel=\"stylesheet\" href=\"%spublic/css/web/ge.css?v=%s\" media=\"all\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
 		}
 
-		$out .= "</head>";
-		$out .= "<body class=\"d-flex flex-column h-100\">";
+		$out .= "</head>\n";
+		$out .= "<body class=\"d-flex flex-column h-100\">\n";
+		$out .= sprintf(
+			"<input type=\"hidden\" name=\"language\" id=\"language\" value=\"%s\" />\n",
+			$_SESSION["LANG"]
+		);
 		
 		return $out;
 	}

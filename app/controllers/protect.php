@@ -4,10 +4,18 @@ class Protect extends Controller
 	public function __construct()
 	{
 		require_once 'app/functions/request.php';
+		require_once("app/functions/strings.php");
+		$string = new functions\strings(); 
 		$hash = functions\request::index("GET","hash");
 		if($hash!==$_SESSION["protect_hash"]){
 			die('Error');
 		}
+
+		if(isset($_SESSION["temp"]) && $_SESSION["temp"]==$_SESSION["protect_x"]){
+			$_SESSION['protect_x'] = $string::random(4);
+		}
+
+		$_SESSION["temp"] = $_SESSION["protect_x"];
 	}
 
 	public function index($name = "")
@@ -25,7 +33,7 @@ class Protect extends Controller
 		imageline($im, 0, rand(0,30), 120, rand(0,30), $linecolor);
 		}
 
-		imagestring($im, 45, 10, 10, $string, $red);
+		imagestring($im, 75, 30, 10, $string, $red);
 
 
 		$filename = sha1("_".time().$_SERVER["REMOTE_ADDR"]).".png";
