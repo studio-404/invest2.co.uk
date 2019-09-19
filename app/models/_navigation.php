@@ -62,11 +62,31 @@ class _navigation
 			$out .= "<div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"bd-versions\">\n";
 
 			$out .= sprintf(
+				"<a class=\"dropdown-item\" href=\"javascript:void(0)\">პროფილი</a>\n"
+			);
+
+
+			$out .= sprintf(
+				"<a class=\"dropdown-item\" href=\"javascript:void(0)\">ჩემი ინვესტიციები (0)</a>\n"
+			);
+
+			$out .= sprintf(
+				"<a class=\"dropdown-item\" href=\"javascript:void(0)\">ბალანსი <strong><font color=\"red\">0.00</font> / <font color=\"green\">105.23</font></strong></a>\n"
+			);
+
+			$out .= sprintf(
 				"<a class=\"dropdown-item g-logout\" href=\"javascript:void(0)\">სისტემიდან გასვლა</a>\n"
 			);
 			
-			
 			$out .= "</div>\n";
+			$out .= "</li>\n";
+
+			$out .= "<li class=\"nav-item\">\n";
+			$out .= "<a href=\"\" class=\"nav-link\" title=\"შეტყობინებები\"><i class=\"fa fa-bell\" aria-hidden=\"true\"></i> (0)</a>\n";
+			$out .= "</li>\n";
+
+			$out .= "<li class=\"nav-item\">\n";
+			$out .= "<a href=\"\" class=\"nav-link\" title=\"ჩემი წერილები\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i> (0)</a>\n";
 			$out .= "</li>\n";
 		}else{
 			$out .= "<li class=\"nav-item dropdown\">\n";
