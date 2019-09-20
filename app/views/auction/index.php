@@ -21,10 +21,6 @@ echo $data['headertop'];
 				    <p class="card-text">
 				    	<b>ფასი: </b><span>2532.95 ლარი</span><br>
 				    	<b>ბიდები: </b><span>5</span><br>
-				    	
-				    	<b>წონა უნციებში: </b><span>0.50</span><br>
-				    	<b>წონა გრამებში: </b><span>15.5 გრამი</span><br>
-				    	<b>დიამეტრი: </b><span>28 მმ</span><br><br>				    	
 				    	<b>დასრულებამდე: </b><span>დარჩა 9 საათი 35 წუთი</span>
 				    </p>
 				    <a href="/<?=$_SESSION["LANG"]?>/auction/read/125/<?=urlencode("ოქროს საინვესტიციო მონეტა")?>" class="btn btn-primary">სრულად</a>

@@ -13,7 +13,6 @@ class userview
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
-						<td>%s</td>
 
 						<td>
 							<a href=\"javascript:void(0)\" onclick=\"viewUser('%s')\"><i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"ნახვა\">pageview</i></a>
@@ -24,7 +23,6 @@ class userview
 					date("d/m/Y g:i:s", (int)$val['register_date']), 
 					strip_output::index($val['email']),
 					strip_output::index($val['firstname']),
-					strip_output::index($val['training_title']),
 					$val['id'], 
 					$val['id']
 				);

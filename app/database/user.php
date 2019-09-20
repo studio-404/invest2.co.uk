@@ -47,16 +47,6 @@ class user
 		$sql = 'SELECT 
 		(
 			SELECT 
-			`navigation`.`title` 
-			FROM 
-			`navigation` 
-			WHERE 
-			`navigation`.`idx`=`users_website`.`trainingid` AND
-			`navigation`.`lang`=:lang AND 
-			`navigation`.`status`!=1		
-		) as training_title, 
-		(
-			SELECT 
 			`usefull`.`title` 
 			FROM 
 			`usefull` 
@@ -105,16 +95,6 @@ class user
 		`id`, 
 		`register_date`, 
 		`register_ip`, 
-		(
-			SELECT 
-			`navigation`.`title` 
-			FROM 
-			`navigation` 
-			WHERE 
-			`navigation`.`idx`=`users_website`.`trainingid` AND
-			`navigation`.`lang`=:lang AND 
-			`navigation`.`status`!=1		
-		) as training_title, 
 		`email`, 
 		`firstname` 
 		FROM 

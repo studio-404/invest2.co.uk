@@ -135,6 +135,12 @@ table a{ color: #2bbbad; padding: 0 5px; }
 .row.materialColor {
   background: #2bbbad;
 }
+
+#sqlCommand{
+  border:solid 1px #000000;
+  min-height: 220px;
+  padding: 10px;
+}
 @media screen and (max-width: 580px) {
   .row {
     padding: 8px 0;

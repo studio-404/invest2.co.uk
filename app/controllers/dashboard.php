@@ -44,7 +44,7 @@ class dashboard extends Controller
 			// $_SESSION["LANG"]."/dashboard/payments"=>"გადახდები",
 			"/".$_SESSION["LANG"]."/dashboard/users"=>"მომხმარებლები",
 			"/".$_SESSION["LANG"]."/dashboard/comments"=>"კომენტარები",
-			// $_SESSION["LANG"]."/dashboard/plugins"=>"პლაგინები",			
+			"/".$_SESSION["LANG"]."/dashboard/plugins"=>"პლაგინები",			
 			// $_SESSION["LANG"]."/tasks"=>"გასაკეთებელი სია",			
 			"/".$_SESSION["LANG"]."/dashboard/filemanager"=>"ფაილ მენეჯერი", 
 			"javascript:profileupdate()"=>"პროფილი",

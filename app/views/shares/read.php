@@ -70,6 +70,11 @@ echo $data['headertop'];
 				    </tr>
 
 				    <tr class="thead-dark">
+				      <th width="250">მფლობელი:</th>
+				      <td>mr_root</td>
+				    </tr>
+
+				    <tr class="thead-dark">
 				      <th width="250">წილი:</th>
 				      <td>
 						<div class="progress">

@@ -23,12 +23,8 @@ echo $data['headertop'];// assets
 				  <div class="card-body">
 				    <h5 class="card-title">ოქროს საინვესტიციო მონეტა</h5>
 				    <p class="card-text">
-				    	<b>ფასი: </b><span>16 ლარი</span><br>
-				    	<b>წონა უნციებში: </b><span>0.50</span><br>
-				    	<b>წონა გრამებში: </b><span>15.5 გრამი</span><br>
-				    	<b>დიამეტრი: </b><span>28 მმ</span><br><br>
-				    	
-				    	<b>მომხმარებელი: </b><span>mr_root</span><br><br>
+				    	<b>ფასი: </b><span>16 ლარი</span><br>				    	
+				    	<b>მფლობელი: </b><span>mr_root</span><br><br>
 				    	<b>წილი: </b><br>
 						<div class="progress">
 						  <div class="progress-bar" role="progressbar" style="width: 0.5%;" aria-valuenow="0.5" aria-valuemin="0" aria-valuemax="100">0.5%</div>

@@ -699,6 +699,34 @@ var add_city_Form = function(slug, lang){
 	});
 };
 
+var sql_command = function(slug, lang){
+	var ajaxFile = "/sqlCommandForm";
+	var header = "<h4>SQL ბრზანება</h4><p class=\"modal-message-box\"></p>";
+	var content = "<p>გთხოვთ დაიცადოთ...</p>";
+	var footer = "<a href=\"javascript:void(0)\" id=\"modalButton\" class=\"waves-effect waves-green btn-flat\">გაშვება</a>";
+
+	$("#modal1 .modal-content").html(header + content);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { slug: slug, lang:lang }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			var errorText = "<p>" + obj.Error.Text +"</p>";
+			$("#modal1 .modal-content").html(header + errorText);
+		}else{
+			var form = "<p>" + obj.form +"</p>";
+			$("#modal1 .modal-content").html(header + form);
+			$("#modalButton").attr({"onclick": obj.attr });
+			// tiny(".tinymceTextArea");
+		}
+	});
+};
+
 var add_city = function(slug, lang){
 	var name = $("#name").val();
 	var ajaxFile = "/addCity";
@@ -1090,6 +1118,32 @@ var formParentModuleAdd = function(lang){
 			method: "POST",
 			url: Config.ajax + ajaxFile,
 			data: { type:type, title:title, lang:lang }
+		}).done(function( msg ) {
+			var obj = $.parseJSON(msg);
+			if(obj.Error.Code==1){
+				$(".modal-message-box").html(obj.Error.Text);
+			}else if(obj.Success.Code==1){
+				$(".modal-message-box").html(obj.Success.Text);
+				location.reload();
+			}else{
+				$(".modal-message-box").html("E5");
+			}
+			scrollTop();
+		});
+	}
+};
+
+var formSqlComand = function(){
+	var sqlCommand = $("#sqlCommand").val();
+
+	var ajaxFile = "/executeSqlCommand";
+	if(typeof sqlCommand == "undefined"){
+		$(".modal-message-box").html("E4");
+	}else{
+		$.ajax({
+			method: "POST",
+			url: Config.ajax + ajaxFile,
+			data: { sqlCommand:sqlCommand }
 		}).done(function( msg ) {
 			var obj = $.parseJSON(msg);
 			if(obj.Error.Code==1){
