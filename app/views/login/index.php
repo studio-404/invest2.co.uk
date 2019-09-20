@@ -44,7 +44,7 @@ $_SESSION['protect_x'] = $string::random(4);
 						</div>
 				  	</div>
 				  	<div class="col-md-2">
-				  		<?php $_SESSION["protect_hash"] = md5(sha1("s".time())); ?>
+				  		<?php $_SESSION["protect_hash"] = md5(sha1("l".time())); ?>
 				  		<img src="/<?=$_SESSION["LANG"]?>/protect?hash=<?=$_SESSION["protect_hash"]?>" alt="" class="protect-img" />
 				  		<a href="javascript:void(0)" class="g-realod-protect" data-img="protect-img"><i class="fa fa-refresh"></i></a>
 				  	</div>
