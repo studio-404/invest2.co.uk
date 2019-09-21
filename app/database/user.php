@@ -17,6 +17,7 @@ class user
 		return $out;
 	}
 
+	/* INVESTING START */
 	private function logintry($args)
 	{
 		$fetch = array();
@@ -40,6 +41,131 @@ class user
 		}
 		return $fetch;
 	}
+
+	private function registerTry($args)
+	{
+		$fetch = array();
+		$sql = "SELECT `id` FROM `users_website` WHERE `mobile`=:mobile";
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":mobile"=>$args["mobile"]
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+
+		return $fetch; // user not exists
+	}
+
+	private function registerTryTwo($args)
+	{
+		$fetch = array();
+		$sql = "SELECT `id` FROM `users_website` WHERE `reg_code`=:reg_code AND `sms_code`=:sms_code";
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":reg_code"=>$args["reg_code"],
+			":sms_code"=>$args["sms_code"]
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+
+		return $fetch; // user not exists
+	}
+
+
+	private function changeRegCode($args)
+	{
+		$sql = "UPDATE `users_website` SET `reg_code`=:new_reg_code WHERE `reg_code`=:reg_code";
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":new_reg_code"=>$args["new_reg_code"],
+			":reg_code"=>$args["reg_code"]
+		));
+
+		return array("true"=>true);
+	}
+
+	private function updateRegUser($args)
+	{
+		$sql = "UPDATE `users_website` SET
+		`personalnumber`=:personalnumber, 
+		`firstname`=:firstname, 
+		`lastname`=:lastname, 
+		`dob`=:dob, 
+		`email`=:email, 
+		`address`=:address,
+		`reg_code`=:new_reg_code
+		WHERE 
+		`reg_code`=:reg_code
+		";
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":personalnumber"=>$args["personalnumber"],
+			":firstname"=>$args["firstname"],
+			":lastname"=>$args["lastname"],
+			":dob"=>$args["dob"],
+			":email"=>$args["email"],
+			":address"=>$args["address"],
+			":reg_code"=>$args["reg_code"],
+			":new_reg_code"=>$args["new_reg_code"]
+		));
+
+		return array("true"=>true);
+	}
+
+	private function updateRegUserDocs($args)
+	{
+		$sql = "UPDATE `users_website` SET
+		`id_pic_front`=:id_pic_front, 
+		`id_pic_back`=:id_pic_back, 
+		`id_pic_with_owner`=:id_pic_with_owner, 
+		`reg_code`=''
+		WHERE 
+		`reg_code`=:reg_code
+		";
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":id_pic_front"=>$args["id_pic_front"],
+			":id_pic_back"=>$args["id_pic_back"],
+			":id_pic_with_owner"=>$args["id_pic_with_owner"],
+			":reg_code"=>$args["reg_code"]
+		));
+
+		return array("true"=>true);
+	}
+
+	private function insert($args)
+	{
+		require_once("app/functions/server.php");
+		$server = new functions\server();
+
+		$sql = 'INSERT INTO `users_website` SET 
+		`register_date`=:register_date, 
+		`register_ip`=:register_ip, 
+		`mobile`=:mobile, 
+		`email`="", 
+		`password`=:password, 
+		`firstname`="", 
+		`sms_code`=:sms_code, 
+		`reg_code`=:reg_code,
+		`status`=0
+		';
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":register_date"=>time(), 
+			":register_ip"=>$server->ip(), 
+			":mobile"=>$args["mobile"], 
+			":password"=>$args["password"], 
+			":sms_code"=>$args["sms_code"], 
+			":reg_code"=>$args["reg_code"]
+		));
+		if($prepare->rowCount()){
+			return true;
+		}
+		return false;
+	}
+	/* INVESTING END */
 
 	private function select($args)
 	{
@@ -200,39 +326,6 @@ class user
 		$prepare->execute(array(
 			":current_password"=>sha1(md5($args["current_password"])), 
 			":email"=>$_SESSION[Config::SESSION_PREFIX."web_username"]
-		));
-		if($prepare->rowCount()){
-			return true;
-		}
-		return false;
-	}
-
-	private function insert($args){
-		require_once("app/functions/server.php");
-		$server = new functions\server();
-
-		$sql = 'INSERT INTO `users_website` SET 
-		`register_date`=:register_date, 
-		`register_ip`=:register_ip, 
-		`firstname`=:firstname, 
-		`phone`=:phone, 
-		`email`=:email, 
-		`age`=:age,
-		`starttime`=:starttime,
-		`howfind`=:howfind,
-		`trainingid`=:trainingid
-		';
-		$prepare = $this->conn->prepare($sql);
-		$prepare->execute(array(
-			":register_date"=>time(), 
-			":register_ip"=>$server->ip(), 
-			":firstname"=>$args["firstname"], 
-			":phone"=>$args["phone"], 
-			":email"=>$args["email"], 
-			":age"=>$args["age"], 
-			":starttime"=>$args["starttime"], 
-			":howfind"=>$args["howfind"], 
-			":trainingid"=>$args["trainingid"]
 		));
 		if($prepare->rowCount()){
 			return true;

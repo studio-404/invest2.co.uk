@@ -12,7 +12,6 @@ $getUrl = explode("/", $url->getUrl());
 			$Database = new Database("mysqlcommand", array(
 				"method"=>"shows"
 			));
-			
 			foreach ($Database->getter() as $value):
 				$active = (isset($getUrl[4]) && $getUrl[4]==$value['Tables_in_buu']) ? " active" : "";
 			?>
@@ -42,6 +41,7 @@ $getUrl = explode("/", $url->getUrl());
 				<tr>
 					<th data-field="id" width="50">სვეტები</th>
 					<th data-field="id" width="50">ტიპი</th>
+					<th data-field="id" width="50">მნიშვნელობა</th>
 				</tr>
 			</thead>
 
@@ -51,6 +51,7 @@ $getUrl = explode("/", $url->getUrl());
 				<tr>
 					<td><?=$v['Field']?></td>
 					<td><?=$v['Type']?></td>
+					<td><?=$v['Default']?></td>
 				</tr>
 				<?php endforeach; ?>				
 			</tbody>

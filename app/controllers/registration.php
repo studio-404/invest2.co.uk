@@ -3,7 +3,42 @@ class Registration extends Controller
 {
 	public function __construct()
 	{
+		require_once 'app/functions/request.php';
+		require_once 'app/functions/redirect.php';
+		require_once 'app/functions/file_upload.php';
+		$file_upload = new functions\file_upload();
 
+		if(
+			isset($_FILES["id_pic_front"]["name"]) && 
+			isset($_FILES["id_pic_back"]["name"]) && 
+			isset($_FILES["id_pic_with_owner"]["name"]) && 
+			functions\request::index("GET", "token")
+		){
+			$target_dir = Config::DIR."public/filemanager/docs/";
+			
+			$id_pic_front = $file_upload->save($target_dir, "id_pic_front", 5000000);	
+			$id_pic_back = $file_upload->save($target_dir, "id_pic_back", 5000000);	
+			$id_pic_with_owner = $file_upload->save($target_dir, "id_pic_with_owner", 5000000);	
+
+			if(!$id_pic_front || !$id_pic_back || !$id_pic_with_owner){
+				@unlink($id_pic_front);
+				@unlink($id_pic_back);
+				@unlink($id_pic_with_owner);
+			}else{
+				$token = functions\request::index("GET", "token");
+				$Database = new Database("user", array(
+					"method"=>"updateRegUserDocs",
+					"id_pic_front"=>$id_pic_front,
+					"id_pic_back"=>$id_pic_back,
+					"id_pic_with_owner"=>$id_pic_with_owner,
+					"reg_code"=>$token
+				));
+				if($Database->getter()){
+					$url = "/".$_SESSION["LANG"]."/registration?next=5";
+					functions\redirect::url($url);
+				}
+			}
+		}		
 	}
 
 	public function index($name = '')

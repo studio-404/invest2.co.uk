@@ -25,6 +25,12 @@ class _footer
 			Config::WEBSITE,
 			Config::WEBSITE_VERSION
 		);
+
+		$out .= sprintf(
+			"<script type=\"text/javascript\" src=\"%spublic/js/web/datepicker.js?v=%s\"></script>\n",
+			Config::WEBSITE,
+			Config::WEBSITE_VERSION
+		);
 		
 		$out .= sprintf(
 			"<script type=\"text/javascript\" src=\"%spublic/js/web/jqueryScript.js?v=%s\"></script>\n",

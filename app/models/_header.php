@@ -95,6 +95,8 @@ class _header
 		
 		$out .= sprintf("<link type=\"text/css\" rel=\"stylesheet\" href=\"%spublic/css/web/fontawesome.css?v=%s\" media=\"all\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
 
+		$out .= sprintf("<link type=\"text/css\" rel=\"stylesheet\" href=\"%spublic/css/web/datepicker.css?v=%s\" media=\"all\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
+
 		$out .= sprintf("<link type=\"text/css\" rel=\"stylesheet\" href=\"%spublic/css/web/general.css?v=%s\" media=\"all\" />\n", Config::WEBSITE, Config::WEBSITE_VERSION);
 
 		if(isset($_SESSION['LANG']) && $_SESSION['LANG']=="ge"){
