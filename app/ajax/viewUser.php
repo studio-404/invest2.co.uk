@@ -66,15 +66,6 @@ class viewUser
 				'IP მისამართი: ',
 				$val['register_ip']
 			);
-
-			$table .= sprintf("
-				<tr>
-				<td><strong>%s</strong></td>
-				<td>%s</td>
-				</tr>",
-				'ტრენინგი: ',
-				$val['training_title']
-			);
 			
 			$table .= sprintf("
 				<tr>
@@ -90,7 +81,25 @@ class viewUser
 				<td><strong>%s</strong></td>
 				<td>%s</td>
 				</tr>",
-				'სახელი გვარი: ',
+				'მობილური: ',
+				$val['mobile']
+			);
+
+			$table .= sprintf("
+				<tr>
+				<td><strong>%s</strong></td>
+				<td>%s</td>
+				</tr>",
+				'პირადი ნომერი: ',
+				$val['personalnumber']
+			);
+
+			$table .= sprintf("
+				<tr>
+				<td><strong>%s</strong></td>
+				<td>%s</td>
+				</tr>",
+				'სახელი: ',
 				$val['firstname']
 			);
 
@@ -99,8 +108,8 @@ class viewUser
 				<td><strong>%s</strong></td>
 				<td>%s</td>
 				</tr>",
-				'საკონტაქტო ნომერი: ',
-				$val['phone']
+				'გვარი: ',
+				$val['lastname']
 			);
 
 			$table .= sprintf("
@@ -108,8 +117,8 @@ class viewUser
 				<td><strong>%s</strong></td>
 				<td>%s</td>
 				</tr>",
-				'ასაკი: ',
-				$val['age']
+				'დაბადების თარიღი: ',
+				$val['dob']
 			);
 
 			$table .= sprintf("
@@ -117,8 +126,38 @@ class viewUser
 				<td><strong>%s</strong></td>
 				<td>%s</td>
 				</tr>",
-				'სწავლების სასურველი დრო: ',
-				$val['starttime']
+				'მისამართი: ',
+				$val['address']
+			);
+
+			$pic = str_replace(Config::DIR, '/', $val["id_pic_front"]);
+			$table .= sprintf("
+				<tr>
+				<td><strong>%s</strong></td>
+				<td><a href=\"%s\" target=\"_blank\">ნახვა</td>
+				</tr>",
+				'პირადობა წინა მხარე: ',
+				$pic
+			);
+
+			$pic = str_replace(Config::DIR, '/', $val["id_pic_back"]);
+			$table .= sprintf("
+				<tr>
+				<td><strong>%s</strong></td>
+				<td><a href=\"%s\" target=\"_blank\">ნახვა</td>
+				</tr>",
+				'პირადობა უკანა მხარე: ',
+				$pic
+			);
+
+			$pic = str_replace(Config::DIR, '/', $val["id_pic_with_owner"]);
+			$table .= sprintf("
+				<tr>
+				<td><strong>%s</strong></td>
+				<td><a href=\"%s\" target=\"_blank\">ნახვა</td>
+				</tr>",
+				'პირადობა + მფლობელი: ',
+				$pic
 			);
 
 			$table .= sprintf("
@@ -126,8 +165,36 @@ class viewUser
 				<td><strong>%s</strong></td>
 				<td>%s</td>
 				</tr>",
-				'როგორ შეიტყვეთ ჩვენ შესახებ: ',
-				$val['howfind_title']
+				'დროებითი ბალანსი: ',
+				$val['pre_balance']
+			);
+
+			$table .= sprintf("
+				<tr>
+				<td><strong>%s</strong></td>
+				<td>%s</td>
+				</tr>",
+				'ბალანსი: ',
+				$val['balance']
+			);
+
+			$verified = "";
+			if($val["verified"]==1){//visibility
+				$verified .= "<a href=\"javascript:void(0)\" class=\"userVerify\" onclick=\"userVerify('".$val['id']."', 'verified')\">";
+				$verified .= "<i class=\"material-icons\">add_circle</i>";
+				$verified .= "</a>";
+			}else{
+				$verified .= "<a href=\"javascript:void(0)\" class=\"userVerify\" onclick=\"userVerify('".$val['id']."', 'not_verified')\">";
+				$verified .= "<i class=\"material-icons\">remove_circle</i>";
+				$verified .= "</a>";
+			}
+			$table .= sprintf("
+				<tr>
+				<td><strong>%s</strong></td>
+				<td>%s</td>
+				</tr>",
+				'ვერიფიცირებული: ',
+				$verified
 			);
 
 		}else{

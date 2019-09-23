@@ -18,6 +18,24 @@ class user
 	}
 
 	/* INVESTING START */
+	private function recover_password($args)
+	{
+		$fetch = array();
+		$sql = 'UPDATE `users_website` SET 
+		`temp_password`=:temp_password 
+		WHERE 
+		`mobile`=:mobile AND
+		`status`!=:one';
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":mobile"=>$args["mobile"], 
+			":temp_password"=>md5($args["temp_password"]), 
+			":one"=>1 
+		));
+		
+		return $fetch;
+	}
+
 	private function logintry($args)
 	{
 		$fetch = array();
@@ -27,7 +45,7 @@ class user
 		`users_website` 
 		WHERE 
 		`mobile`=:mobile AND
-		`password`=:password AND
+		(`password`=:password OR `temp_password`=:password) AND 
 		`status`!=:one';
 		$prepare = $this->conn->prepare($sql);
 		$prepare->execute(array(
@@ -165,22 +183,24 @@ class user
 		}
 		return false;
 	}
+
+	private function changeVerified($args)
+	{
+		$sql = "UPDATE `users_website` SET `verified`=:verified WHERE `id`=:id";
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":verified"=>$args["verified"],
+			":id"=>$args["id"]
+		));
+
+		return array("true"=>true);
+	}
 	/* INVESTING END */
 
 	private function select($args)
 	{
 		$fetch = array();
 		$sql = 'SELECT 
-		(
-			SELECT 
-			`usefull`.`title` 
-			FROM 
-			`usefull` 
-			WHERE 
-			`usefull`.`idx`=`users_website`.`howfind` AND
-			`usefull`.`lang`=:lang AND 
-			`usefull`.`status`!=1		
-		) as howfind_title, 
 		`users_website`.* 
 		FROM 
 		`users_website` 
@@ -188,8 +208,7 @@ class user
 		`id`=:id';
 		$prepare = $this->conn->prepare($sql);
 		$prepare->execute(array(
-			":id"=>$args["id"], 
-			":lang"=>$args["lang"] 
+			":id"=>$args["id"]
 		));
 		if($prepare->rowCount()){
 			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);

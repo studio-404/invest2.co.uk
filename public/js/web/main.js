@@ -93,6 +93,46 @@ var tempmodal = function(title, body, buttons){
 		});
 	};
 
+	if(typeof document.getElementsByClassName("g-recover-button")[0] !== "undefined"){
+		document.getElementsByClassName("g-recover-button")[0].addEventListener("click", (e) => {
+			document.getElementsByClassName("g-recover-button")[0].childNodes[1].style.display = "inline-block";
+			
+			$("#tempmodal").remove();
+
+			var title = document.getElementsByClassName("g-recover-button")[0].getAttribute("modal-title");
+			var form = document.querySelector('#g-form-recover');
+			var formData = serialize(form);
+			var lang = document.getElementById("language").value;
+
+			var xhttp = ajax("investor_recover",formData);
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var responseText = JSON.parse(this.responseText);
+
+					if(responseText.Error.Code==1){
+						var body = "<p>"+responseText.Error.Text+"</p>";
+						var modal = tempmodal(title, body, "false");
+
+						document.querySelector('[name="code"]').value = '';
+						document.getElementsByClassName("g-realod-protect")[0].click();
+					}else{
+						var body = "<p>"+responseText.Success.Text+"</p>";
+						var modal = tempmodal(title, body, "false");
+						
+						setTimeout(function(){
+							location.href = "/"+lang+"/login";
+						}, 3500);
+					}
+					
+					$("body").append(modal);
+					$("#tempmodal").modal("show");
+
+					document.getElementsByClassName("g-recover-button")[0].childNodes[1].style.display = "none";
+				}
+			};
+		});
+	};
+
 	if(typeof document.getElementsByClassName("g-logout")[0] !== "undefined"){
 		document.getElementsByClassName("g-logout")[0].addEventListener("click", (e) => {
 			var lang = document.getElementById("language").value;
@@ -231,7 +271,7 @@ var tempmodal = function(title, body, buttons){
 		});
 	};
 
-	if(typeof document.getElementById("customFile") !== "undefined"){
+	if(document.getElementById("customFile")){
 		document.getElementById("customFile").addEventListener("change", (e) => {
 			$("#tempmodal").remove();
 			var customFile = document.getElementById("customFile");
@@ -258,7 +298,7 @@ var tempmodal = function(title, body, buttons){
 		});
 	};
 
-	if(typeof document.getElementById("customFile2") !== "undefined"){
+	if(document.getElementById("customFile2")){
 		document.getElementById("customFile2").addEventListener("change", (e) => {
 			$("#tempmodal").remove();
 			var customFile = document.getElementById("customFile2");
@@ -285,7 +325,7 @@ var tempmodal = function(title, body, buttons){
 		});
 	};
 
-	if(typeof document.getElementById("customFile3") !== "undefined"){
+	if(document.getElementById("customFile3")){
 		document.getElementById("customFile3").addEventListener("change", (e) => {
 			$("#tempmodal").remove();
 			var customFile = document.getElementById("customFile3");

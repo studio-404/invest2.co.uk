@@ -2165,6 +2165,26 @@ var editCatalog = function(idx, lang){
 	});
 };
 
+
+var userVerify = function(id, status){
+	var ajaxFile = "/userVerify";
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { id: id, status:status }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			console.log(obj.Error.Text);
+		}else{
+			$(".userVerify").html(obj.Success.Verify);
+			var vv = "userVerify('"+id+"', '"+obj.Success.newstatus+"')";
+			$(".userVerify").attr("onclick", vv);
+		}
+	});
+};
+
 var formCatalogEdit = function(idx, lang){
 	var date = $("#date").val();
 	var title = $("#title").val();

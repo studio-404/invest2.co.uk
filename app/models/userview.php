@@ -15,7 +15,7 @@ class userview
 						<td>%s</td>
 
 						<td>
-							<a href=\"javascript:void(0)\" onclick=\"viewUser('%s')\"><i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"ნახვა\">pageview</i></a>
+							<a href=\"javascript:void(0)\" onclick=\"viewUser('%s')\"><i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"ნახვა\">mode_edit</i></a>
 
 							<a href=\"javascript:void(0)\" onclick=\"askDeleteUser('%s')\"><i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"წაშლა\">delete</i></a>
 						</td>

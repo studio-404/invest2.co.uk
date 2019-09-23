@@ -9,7 +9,7 @@ $string = new functions\strings();
 echo $data['headerModule'];// assets
 echo $data['headertop'];// assets
 
-$_SESSION['protect_x'] = $string::random(8);
+$_SESSION['protect_x'] = $string::random(4);
 ?>
 
 <main>
@@ -21,32 +21,34 @@ $_SESSION['protect_x'] = $string::random(8);
 			</div>
 
 			<div class="col-md-12">
-				<form>
-				  <div class="form-group g-error">
-				    <label for="">მობილურის ნომერი</label>
+				<form action="" method="post" id="g-form-recover">
+				  <div class="form-group">
+				    <label for="">მობილურის ნომერი <font color="red">*</font></label>
 				    <div class="input-group">
 				    	<div class="input-group-prepend">
 				          <div class="input-group-text">+995</div>
 				        </div>
-				        <input type="text" class="form-control" placeholder="599..." />
-				    </div>				    
-				    <div class="error">მობილურის ნომრის ველი სავალდებულოა!</div>
+				        <input type="text" class="form-control" name="mobile" placeholder="599..." />
+				    </div>
 				  </div>
 				  
-				  <div class="row">
+				   <div class="row">
 				  	<div class="col-md-8">
-				  		<div class="form-group">
-							<label for="">შეიყვანეთ დამცავი კოდი</label>
-							<input type="text" class="form-control" />
-							<div class="error">დამცავი ველის ველი სავალდებულოა!</div>
+				  		<div class="form-group g-code-box">
+							<label for="">შეიყვანეთ დამცავი კოდი <font color="red">*</font></label>
+							<input type="text" class="form-control" name="code" value="" />
 						</div>
 				  	</div>
-				  	<div class="col-md-4">
-				  		<img src="/<?=$_SESSION["LANG"]?>/protect" alt="" class="protect-img" />
+				  	<div class="col-md-2">
+				  		<?php $_SESSION["protect_hash"] = md5(sha1("l".time())); ?>
+				  		<img src="/<?=$_SESSION["LANG"]?>/protect?hash=<?=$_SESSION["protect_hash"]?>" alt="" class="protect-img" />
+				  		<a href="javascript:void(0)" class="g-realod-protect" data-img="protect-img"><i class="fa fa-refresh"></i></a>
 				  	</div>
 				  </div>
 
-				  <button type="submit" class="btn btn-primary mb-2">გაგზავნა</button>
+				 <button type="button" class="btn btn-primary mb-2 g-recover-button" modal-title="შეტყობინება">
+				  	<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span><span>შესვლა</span>
+				  </button>
 				</form>
 
 				<div class="margin-top-40"></div>
