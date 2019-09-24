@@ -62,16 +62,21 @@ class _navigation
 			$out .= "<div class=\"dropdown-menu dropdown-menu-right\" aria-labelledby=\"bd-versions\">\n";
 
 			$out .= sprintf(
-				"<a class=\"dropdown-item\" href=\"javascript:void(0)\">პროფილი</a>\n"
+				"<a class=\"dropdown-item\" href=\"/%s/profile\">პროფილი</a>\n",
+				$_SESSION["LANG"]
 			);
 
+			$out .= sprintf(
+				"<a class=\"dropdown-item\" href=\"/%s/updatepassword\">პაროლის შეცვლა</a>\n",
+				$_SESSION["LANG"]
+			);
+
+			$out .= sprintf(
+				"<a class=\"dropdown-item\" href=\"javascript:void(0)\">ბალანსი <strong><font color=\"red\">10.70</font> / <font color=\"green\">105.23</font></strong></a>\n"
+			);
 
 			$out .= sprintf(
 				"<a class=\"dropdown-item\" href=\"javascript:void(0)\">ჩემი ინვესტიციები (0)</a>\n"
-			);
-
-			$out .= sprintf(
-				"<a class=\"dropdown-item\" href=\"javascript:void(0)\">ბალანსი <strong><font color=\"red\">0.00</font> / <font color=\"green\">105.23</font></strong></a>\n"
 			);
 
 			$out .= sprintf(

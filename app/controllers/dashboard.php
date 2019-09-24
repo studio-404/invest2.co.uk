@@ -7,6 +7,12 @@ class dashboard extends Controller
 
 	public function __construct()
 	{
+		if($_SERVER["REMOTE_ADDR"]!=Config::DASHBOAR_IP)
+		{
+			http_response_code(403);
+			die("You dont have a permition");
+		}
+		
 		if(!isset($_SESSION[Config::SESSION_PREFIX."username"]))
 		{
 			require_once 'app/functions/redirect.php';

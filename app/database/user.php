@@ -18,6 +18,62 @@ class user
 	}
 
 	/* INVESTING START */
+	private function changepassword($args)
+	{
+		$fetch = array();
+		$sql = 'UPDATE `users_website` SET 
+		`password`=:password 
+		WHERE 
+		`mobile`=:mobile';
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":mobile"=>$args["mobile"], 
+			":password"=>md5($args["password"])
+		));
+		
+		return $fetch;
+	}
+
+	private function checkpassword_investor($args){
+		$sql = 'SELECT `id` FROM `users_website` WHERE `password`=:current_password AND `mobile`=:mobile';
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":current_password"=>md5($args["current_password"]), 
+			":mobile"=>$args["mobile"]
+		));
+		if($prepare->rowCount()){
+			return true;
+		}
+		return false;
+	}
+
+	private function updateProfile($args)
+	{
+		$fetch = array();
+		$sql = 'UPDATE `users_website` SET 
+		`personalnumber`=:personalnumber, 
+		`firstname`=:firstname, 
+		`lastname`=:lastname, 
+		`dob`=:dob, 
+		`email`=:email, 
+		`address`=:address,
+		`verified`=0 
+		WHERE 
+		`mobile`=:mobile';
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":personalnumber"=>$args["personalnumber"], 
+			":firstname"=>$args["firstname"], 
+			":lastname"=>$args["lastname"], 
+			":dob"=>$args["dob"], 
+			":email"=>$args["email"], 
+			":address"=>$args["address"], 
+			":mobile"=>$args["mobile"] 
+		));
+
+		return $fetch;
+	}
+
 	private function recover_password($args)
 	{
 		$fetch = array();
@@ -51,6 +107,28 @@ class user
 		$prepare->execute(array(
 			":mobile"=>$args["mobile"], 
 			":password"=>$args["password"], 
+			":one"=>1 
+		));
+		
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
+	private function logintry_nopass($args)
+	{
+		$fetch = array();
+		$sql = 'SELECT 
+		* 
+		FROM 
+		`users_website` 
+		WHERE 
+		`mobile`=:mobile AND
+		`status`!=:one';
+		$prepare = $this->conn->prepare($sql);
+		$prepare->execute(array(
+			":mobile"=>$args["mobile"], 
 			":one"=>1 
 		));
 		
