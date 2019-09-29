@@ -2,6 +2,7 @@
 class _navigation
 {
 	public $data;
+	public $deposite = array();
 	public $footerNavigation = false;
 
 	public function index(){
@@ -72,7 +73,8 @@ class _navigation
 			);
 
 			$out .= sprintf(
-				"<a class=\"dropdown-item\" href=\"javascript:void(0)\">ბალანსი <strong><font color=\"red\">10.70</font> / <font color=\"green\">105.23</font></strong></a>\n"
+				"<a class=\"dropdown-item\" href=\"/%s/balance\">ბალანსი</a>\n",
+				$_SESSION["LANG"]
 			);
 
 			$out .= sprintf(
@@ -87,11 +89,20 @@ class _navigation
 			$out .= "</li>\n";
 
 			$out .= "<li class=\"nav-item\">\n";
-			$out .= "<a href=\"\" class=\"nav-link\" title=\"შეტყობინებები\"><i class=\"fa fa-bell\" aria-hidden=\"true\"></i> (0)</a>\n";
+			
+			$out .= sprintf(
+				"<a href=\"/%s/balance\" class=\"nav-link\" title=\"ბალანსი\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> <strong><font color=\"red\">%s</font> / <font color=\"green\">%s</font></strong></a>\n",
+				$_SESSION["LANG"],
+				(float)$this->deposite["sub"],
+				(float)$this->deposite["main"]
+			);
 			$out .= "</li>\n";
-
+			
 			$out .= "<li class=\"nav-item\">\n";
-			$out .= "<a href=\"\" class=\"nav-link\" title=\"ჩემი წერილები\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i> (0)</a>\n";
+			$out .= sprintf(
+				"<a href=\"/%s/notifications\" class=\"nav-link\" title=\"შეტყობინებები\"><i class=\"fa fa-bell\" aria-hidden=\"true\"></i> (0)</a>\n",
+				$_SESSION["LANG"]
+			);
 			$out .= "</li>\n";
 		}else{
 			$out .= "<li class=\"nav-item dropdown\">\n";

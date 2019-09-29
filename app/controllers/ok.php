@@ -3,61 +3,86 @@ class Ok extends Controller
 {
 	public function __construct()
 	{
-		
+		if(!isset($_SESSION[Config::SESSION_PREFIX."userdata"]))
+		{
+			require_once 'app/functions/redirect.php';
+			functions\redirect::url("/".$_SESSION["LANG"]."/home");
+		}
 	}
 
 	public function index($name = '')
 	{
-		require_once("app/functions/redirect.php");
-		require_once("app/functions/tbcbank.php");
-		require_once("app/functions/getpayment.php");
-		require_once("app/functions/send.php");
+		require_once 'app/functions/request.php';
+		
+		/* DATABASE */
+		$db_langs = new Database("language", array(
+			"method"=>"select"
+		)); /* # */
 
-		if(!isset($_REQUEST["trans_id"]) || empty($_REQUEST["trans_id"])){
-			functions\redirect::url(Config::WEBSITE.$_SESSION["LANG"]."/fail");
-			exit();
-		}
-
-		$tbcbank = new functions\tbcbank();
-		$result = $tbcbank->getStatus($_REQUEST["trans_id"]);
-
-		if(preg_match('/RESULT_CODE: 000/', $result)){
-			$payments = new Database("payments", array(
-				"method"=>"setpayed",
-				"tbc_trans_id"=>urlencode($_REQUEST["trans_id"]),
-				"result_text"=>$result
-			));
-			$redirectMe = "/myaccount/?view=purchases";
-		}else{
-			$payments = new Database("payments", array(
-				"method"=>"setunpayed",
-				"tbc_trans_id"=>urlencode($_REQUEST["trans_id"]), 
-				"result_text"=>$result
-			));
-			$redirectMe = "/fail";
-		}
-
-		/* SEND EMAIL SELECTION start */
-		$paymentId = new Database("payments", array(
-			"method"=>"selectIdByTransId", 
-			"trans_id"=>urlencode($_REQUEST["trans_id"])
-		)); 
-		$fetch = $paymentId->getter();
-
-		$getpayment = new functions\getpayment();
-		$send = new functions\send();
-		$table = $getpayment->index($fetch["id"]);
-		$table .= "<br /><br />";
-		$table .= "<strong>Result:</strong><br />";
-		$table .= $result;
-
-		$send->index(array(
-			"sendTo"=>Config::RECIEVER_EMAIL,
-			"subject"=>Config::NAME." - TBC PAYMENT TRY",
-			"body"=>$table
+		$db_navigation = new Database("page", array(
+			"method"=>"select", 
+			"cid"=>0, 
+			"nav_type"=>0,
+			"lang"=>$_SESSION['LANG'],
+			"status"=>0 
 		));
-		/* SEND EMAIL SELECTION end */
 
-		functions\redirect::url(Config::WEBSITE.$_SESSION["LANG"].$redirectMe);
+		$s = (isset($_SESSION["URL"][1])) ? $_SESSION["URL"][1] : Config::MAIN_CLASS;
+		$db_pagedata = new Database("page", array(
+			"method"=>"selecteBySlug", 
+			"slug"=>$s,
+			"lang"=>$_SESSION['LANG'], 
+			"all"=>true
+		));
+
+		/* HEDARE */
+		$header = $this->model('_header');
+		$header->public = Config::PUBLIC_FOLDER; 
+		$header->lang = $_SESSION["LANG"]; 
+		$header->pagedata = $db_pagedata; 
+
+		/* NAVIGATION */
+		$navigation = $this->model('_navigation');
+		$navigation->data = $db_navigation->getter();
+
+		if(isset($_SESSION[Config::SESSION_PREFIX."userdata"]))
+		{
+			/* deposite */
+			$mydeposite = new Database("payment", array(
+				"method"=>"mydeposite",
+				"user_id"=>(int)$_SESSION[Config::SESSION_PREFIX."userdata"]["id"]
+			));
+			$navigation->deposite = $mydeposite->getter();
+		}
+
+		/* header top */
+		$headertop = $this->model('_top');
+		$headertop->data["navigationModule"] = $navigation->index();
+
+		/*footer */
+		$footer = $this->model('_footer');
+
+		$pay_code = preg_match("/^paycode=(\w+)/", functions\request::index("POST", "custom"), $maches);
+
+		$Database = new Database("payment", array(
+			"method"=>"pay",
+			"verify_sign"=>functions\request::index("POST", "verify_sign"),
+			"ip"=>$_SERVER["REMOTE_ADDR"],
+			"user_id"=>$_SESSION[Config::SESSION_PREFIX."userdata"]["id"],
+			"pay_code"=>$maches[1]
+		));
+
+		/* view */
+		$this->view('ok/index', [
+			"header"=>array(
+				"website"=>Config::WEBSITE,
+				"public"=>Config::PUBLIC_FOLDER
+			),
+			"headerModule"=>$header->index(), 
+			"headertop"=>$headertop->index(), 
+			"pageData"=>$db_pagedata->getter(), 
+			"paypal_data"=>$_POST, 
+			"footer"=>$footer->index()
+		]);
 	}
 }

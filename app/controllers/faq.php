@@ -48,6 +48,16 @@ class Faq extends Controller
 		$navigation = $this->model('_navigation');
 		$navigation->data = $db_navigation->getter();
 
+		if(isset($_SESSION[Config::SESSION_PREFIX."userdata"]))
+		{
+			/* deposite */
+			$mydeposite = new Database("payment", array(
+				"method"=>"mydeposite",
+				"user_id"=>(int)$_SESSION[Config::SESSION_PREFIX."userdata"]["id"]
+			));
+			$navigation->deposite = $mydeposite->getter();
+		}
+
 		/* slidr */
 		$faq = $this->model('_faq');
 		$faq->data = $db_faq->getter();

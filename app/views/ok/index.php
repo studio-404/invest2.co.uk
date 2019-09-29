@@ -1,39 +1,46 @@
 <?php 
 require_once("app/functions/l.php"); 
+require_once("app/functions/strings.php"); 
 require_once("app/functions/strip_output.php"); 
+// require_once("app/functions/menu_data.php"); 
+// $menu_data = new functions\menu_data(); 
 $l = new functions\l(); 
-echo $data['headerModule']; 
-echo $data['headertop']; 
-$photo = (isset($data["pageData"]["photo"])) ? Config::WEBSITE_.$data["pageData"]["photo"] : "";
-
+$string = new functions\strings(); 
+echo $data['headerModule'];// assets
+echo $data['headertop'];// assets
 
 ?>
 
-<section class="breadcrups" style="background-image: url('<?=$photo?>')">
-	<section class="content">
-		<h3><?=(isset($data["pageData"]["title"])) ? $data["pageData"]["title"] : ""?></h3>
-		<ul>
-			<li><a href="<?=Config::WEBSITE.$_SESSION["LANG"]."/".Config::MAIN_CLASS?>"><?=$l->translate("home")?></a></li>
-			<li><a href=""><?=(isset($data["pageData"]["title"])) ? $data["pageData"]["title"] : ""?></a></li>
-		</ul>
-	</section>
-</section>
-
 <main>
-	<section class="center"> 
-		<section class="title"><?=strip_tags($data["pageData"]["title"])?></section>
-		<section class="row">
-			<section class="col-lg-12 faq">				
-				<!-- Panel start -->
-				<section class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">				  
-				  <?=$l->translate("done")?><br />
-				</section>
-				<!-- Panel End -->
-			</section>
-		</section>
-	</section>
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-md-12 g-feedback-page">
+				<h2>მადლობა</h2>
+			</div>
+
+			<div class="col-md-12">
+				
+				<div class="alert alert-success">
+					<strong>თანხა წარმატებით დაჯდა <font color="red">დროებით ანგარიშზე</font> !</strong>
+
+					<ul>
+						<li>3 სამუშაო დღის განმავლობაში გადავა <font color="green">მთავარ ანგარიშზე</font>, რის შემდეგაც შეძლებთ ინვესტირებას.</li>
+						<li><font color="green">მთავარ ანგარიშზე</font> გადასვლა გეცნობებათ SMS-ით.</li>
+					</ul>
+				</div>
+
+				<div class="margin-top-40"></div>
+			</div>
+
+		</div>
+
+	</div>
 </main>
 
-<section class="clearer"></section>
 
 <?=$data['footer']?>
+
+
+</body>
+</html>

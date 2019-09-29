@@ -1,35 +1,22 @@
-<?php 
-class Search extends Controller
+<?php
+class Notifications extends Controller
 {
 	public function __construct()
 	{
-
+		//$_SESSION[Config::SESSION_PREFIX."userdata"]
+		if(!isset($_SESSION[Config::SESSION_PREFIX."userdata"]))
+		{
+			require_once 'app/functions/redirect.php';
+			functions\redirect::url("/".$_SESSION["LANG"]."/home");
+		}
 	}
 
-	public function index($lang)
-	{
-		require_once("app/functions/request.php");
-		$word = "";
-		if(functions\request::index("GET","w")){
-			$word = strip_tags(functions\request::index("GET","w"));
-			$word = str_replace(
-				array("-", "%20", "'", '"'),
-				array(" ", " ", "", ""),
-				$word
-			); 
-		}
-
-		// $db_search = new Database("searchBy", array(
-		// 	"method"=>"select", 
-		// 	"word"=>$word,
-		// 	"lang"=>$_SESSION['LANG']
-		// ));
-
+	public function index($name = '')
+	{ 
 		/* DATABASE */
 		$db_langs = new Database("language", array(
 			"method"=>"select"
-		));
-	
+		)); /* # */
 
 		$db_navigation = new Database("page", array(
 			"method"=>"select", 
@@ -46,31 +33,16 @@ class Search extends Controller
 			"lang"=>$_SESSION['LANG'], 
 			"all"=>true
 		));
-		
 
 		/* HEDARE */
 		$header = $this->model('_header');
 		$header->public = Config::PUBLIC_FOLDER; 
-		$header->lang = $_SESSION["LANG"]; 	
-		$header->pagedata = $db_pagedata; 	
+		$header->lang = $_SESSION["LANG"]; 
+		$header->pagedata = $db_pagedata; 
 
 		/* NAVIGATION */
 		$navigation = $this->model('_navigation');
 		$navigation->data = $db_navigation->getter();
-
-		if(isset($_SESSION[Config::SESSION_PREFIX."userdata"]))
-		{
-			/* deposite */
-			$mydeposite = new Database("payment", array(
-				"method"=>"mydeposite",
-				"user_id"=>(int)$_SESSION[Config::SESSION_PREFIX."userdata"]["id"]
-			));
-			$navigation->deposite = $mydeposite->getter();
-		}
-
-		/* NAVIGATION Footer */
-		$navigation_footer = $this->model('_navigation');
-		$navigation_footer->data = $db_navigation->getter();
 
 		/* header top */
 		$headertop = $this->model('_top');
@@ -78,10 +50,10 @@ class Search extends Controller
 
 		/*footer */
 		$footer = $this->model('_footer');
-		
-	
+
+
 		/* view */
-		$this->view('search/index', [
+		$this->view('notifications/index', [
 			"header"=>array(
 				"website"=>Config::WEBSITE,
 				"public"=>Config::PUBLIC_FOLDER
@@ -89,8 +61,8 @@ class Search extends Controller
 			"headerModule"=>$header->index(), 
 			"headertop"=>$headertop->index(), 
 			"pageData"=>$db_pagedata->getter(), 
-			"word"=>$word, 
-			"footer"=>$footer->index() 
+			"footer"=>$footer->index()
 		]);
 	}
+
 }

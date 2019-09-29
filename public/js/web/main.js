@@ -432,5 +432,45 @@ var tempmodal = function(title, body, buttons){
 		});
 	};
 
+	//g-
+	if(typeof document.getElementsByClassName("g-deposit")[0] !== "undefined"){
+		document.getElementsByClassName("g-deposit")[0].addEventListener("click", (e) => {
+			document.getElementsByClassName("g-deposit")[0].childNodes[1].style.display = "inline-block";
+			
+			$("#tempmodal").remove();
 
+			var title = document.getElementsByClassName("g-deposit")[0].getAttribute("modal-title");
+			var form = document.querySelector('#paypal_checkout');
+			var formData = serialize(form);
+			var lang = document.getElementById("language").value;
+
+			var xhttp = ajax("investor_deposit",formData);
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var responseText = JSON.parse(this.responseText);
+
+					if(responseText.Error.Code==1){
+						var body = "<p>"+responseText.Error.Text+"</p>";
+						var modal = tempmodal(title, body, "false");
+
+						document.querySelector('[name="code"]').value = '';
+						document.getElementsByClassName("g-realod-protect")[0].click();
+
+						$("body").append(modal);
+						$("#tempmodal").modal("show");
+						document.getElementsByClassName("g-deposit")[0].childNodes[1].style.display = "none";
+					}else{
+						// responseText.Success.Text
+						if(responseText.Success.payCode){
+							document.getElementById("paycode").value = "paycode="+responseText.Success.payCode; 
+
+							setTimeout(function(){
+								form.submit();
+							}, 1500);
+						}
+					}
+				}
+			};
+		});
+	};
 })();

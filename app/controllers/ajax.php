@@ -8,7 +8,7 @@ class ajax extends Controller
 		$this->out = array(
 			"Error" => array(
 				"Code"=>1, 
-				"Text"=>"მოხდა შეცდომახხ !",
+				"Text"=>"მოხდა შეცდომა !",
 				"Details"=>"დამატებითი ინფო არ მოიძებნა..."
 			)
 		);
