@@ -91,7 +91,7 @@ class _navigation
 			$out .= "<li class=\"nav-item\">\n";
 			
 			$out .= sprintf(
-				"<a href=\"/%s/balance\" class=\"nav-link\" title=\"ბალანსი\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> <strong><font color=\"red\">%s</font> / <font color=\"green\">%s</font></strong></a>\n",
+				"<a href=\"/%s/balance\" class=\"nav-link\" title=\"ბალანსი\"><i class=\"fa fa-usd\" aria-hidden=\"true\"></i> <strong><font color=\"red\">%s</font> / <b style=\"font-family:'LariSymbolV2';\">L</b><font color=\"green\"> %s</font></strong></a>\n",
 				$_SESSION["LANG"],
 				(float)$this->deposite["sub"],
 				(float)$this->deposite["main"]

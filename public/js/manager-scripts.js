@@ -2262,3 +2262,33 @@ var formCatalogEdit = function(idx, lang){
 		}
 	});	
 };
+
+var editPayment = function(id){
+	var ajaxFile = "/editPayment";
+	var header = "<h4>გადახდის რედაქტირება</h4><p class=\"modal-message-box\"></p>";
+	var content = "<p>გთხოვთ დაიცადოთ...</p>";
+	var footer = "<a href=\"javascript:void(0)\" id=\"modalButton\" class=\"waves-effect waves-green btn-flat\">რედაქტირება</a>";
+
+	$("#modal1 .modal-content").html(header + content);
+	$("#modal1 .modal-footer").html(footer);
+	$('#modal1').openModal();
+
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: { id: id }
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Error.Code==1){
+			var errorText = "<p>" + obj.Error.Text +"</p>";
+			$("#modal1 .modal-content").html(header + errorText);
+		}else{
+			var form = "<p>" + obj.form +"</p>";
+			$("#modal1 .modal-content").html(header + form);
+			// $("#attachModule").material_select();
+			$("#modalButton").attr({"onclick": obj.attr });
+			tiny(".tinymceTextArea");
+			scrollTop();		
+		}
+	});
+};

@@ -63,7 +63,7 @@ class Balance extends Controller
 
 
 		/* view */
-		$this->view('balance/index', [
+		$this->view('balance/index2', [
 			"header"=>array(
 				"website"=>Config::WEBSITE,
 				"public"=>Config::PUBLIC_FOLDER

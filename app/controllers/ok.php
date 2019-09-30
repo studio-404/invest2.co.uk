@@ -1,4 +1,13 @@
 <?php 
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Payer;
+use PayPal\Api\Details;
+use PayPal\Api\Amount;
+use PayPal\Api\Transaction;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+
 class Ok extends Controller
 {
 	public function __construct()
@@ -13,6 +22,31 @@ class Ok extends Controller
 	public function index($name = '')
 	{
 		require_once 'app/functions/request.php';
+
+		$api = new ApiContext(
+			new OAuthTokenCredential(
+				'Adn9YW3bLKSkrLVpnIj-iBtP4heYrBW9hjZQ6tFyqZvZlYOQEpBPO8V_X_f68sQ_5PAixekCtN8veF55',
+				'ENwARAywe4i0oRhuocyQo3fxd0chRSAnSNwvb5U9tSpKdSurqHzKwjAzIsDKwyWc8lNdzQbnWPn9vF1u'
+			)
+		);
+
+		$api->setConfig([
+			'mode'=>'sandbox',
+			'http.ConnectionTimeOut' => 30,
+			'log.LogEnabled' => false,
+			'log.FileName' => '',
+			'log.LogLevel' => 'FINE',
+			'validation.level' => 'log'
+		]);
+		$pay_code = functions\request::index("GET", "paymentId");
+
+		$Database = new Database("payment", array(
+			"method"=>"pay",
+			"verify_sign"=>$pay_code,
+			"ip"=>$_SERVER["REMOTE_ADDR"],
+			"user_id"=>$_SESSION[Config::SESSION_PREFIX."userdata"]["id"],
+			"pay_code"=>md5($pay_code)
+		));
 		
 		/* DATABASE */
 		$db_langs = new Database("language", array(
@@ -61,16 +95,6 @@ class Ok extends Controller
 
 		/*footer */
 		$footer = $this->model('_footer');
-
-		$pay_code = preg_match("/^paycode=(\w+)/", functions\request::index("POST", "custom"), $maches);
-
-		$Database = new Database("payment", array(
-			"method"=>"pay",
-			"verify_sign"=>functions\request::index("POST", "verify_sign"),
-			"ip"=>$_SERVER["REMOTE_ADDR"],
-			"user_id"=>$_SESSION[Config::SESSION_PREFIX."userdata"]["id"],
-			"pay_code"=>$maches[1]
-		));
 
 		/* view */
 		$this->view('ok/index', [

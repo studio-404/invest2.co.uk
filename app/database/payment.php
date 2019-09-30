@@ -55,6 +55,48 @@ class payment
 		return $prepare->rowCount();
 	}
 
+	private function selectAll($args)
+	{
+		$fetch = array();
+		$itemPerPage = $args['itemPerPage'];
+		$from = (isset($_GET['pn']) && $_GET['pn']>0) ? (($_GET['pn']-1)*$itemPerPage) : 0;
+		
+		$select = "SELECT 
+		(SELECT COUNT(`id`) FROM `payment` WHERE `status`!=3) as counted, 
+		(SELECT `mobile` FROM `users_website` WHERE `users_website`.`id`=`payment`.`user_id`) as usersMobile, 
+		(SELECT `id` FROM `users_website` WHERE `users_website`.`id`=`payment`.`user_id`) as usersId, 
+		`payment`.* 
+		FROM 
+		`payment` 
+		WHERE `status`!=3
+		ORDER BY `currenttime` DESC LIMIT ".$from.",".$itemPerPage;	
+		$prepare = $this->conn->prepare($select); 
+		$prepare->execute();
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
+	private function selectById($args)
+	{
+		$fetch = array();
+		$select = "SELECT 
+		(SELECT `mobile` FROM `users_website` WHERE `users_website`.`id`=`payment`.`user_id`) as usersMobile, 
+		`payment`.* 
+		FROM 
+		`payment` 
+		WHERE `id`=:id";	
+		$prepare = $this->conn->prepare($select); 
+		$prepare->execute(array(
+			":id"=>$args["id"]
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetch(PDO::FETCH_ASSOC);
+		}
+		return $fetch;
+	}
+
 	private function mydeposite($args)
 	{
 		$select = "SELECT 

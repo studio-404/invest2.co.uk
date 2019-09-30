@@ -1,4 +1,14 @@
 @import 'var';
+@font-face {
+  font-family: 'LariSymbolV2';
+  src: url('../../fonts/web/LariSymbolV2.eot?#iefix') format('embedded-opentype'),  
+  url('../../fonts/web/LariSymbolV2.woff') format('woff'), 
+  url('../../fonts/web/LariSymbolV2.ttf')  format('truetype'), 
+  url('../../fonts/web/LariSymbolV2.svg#LariSymbolV2') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 .jumbotron{ margin: 40px 0px; }
 .col-md-4 .card{ margin-bottom: 40px; }

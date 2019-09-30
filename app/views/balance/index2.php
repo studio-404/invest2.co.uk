@@ -161,23 +161,7 @@ $_SESSION['protect_x'] = $string::random(4);
 						<!-- 
 							https://www.paypal.com/cgi-bin/webscr
 							https://www.sandbox.paypal.com/us/home -->
-						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypal_checkout">
-							<input type="hidden" name="cmd" value="_cart" />
-					        <input type="hidden" name="upload" value="1" />			
-					        <input type="hidden" name="no_note" value="0" />
-					        <input type="hidden" name="bn" value="PP-BuyNowBF" />
-					        <input type="hidden" name="tax" value="0" />			
-					        <input type="hidden" name="rm" value="2" />
-
-							<input type="hidden" name="business" value="<?=Config::PAYPAL_BUSSINESS?>" />
-							<input type="hidden" name="handling_cart" value="0" />
-							<input type="hidden" name="currency_code" value="<?=Config::PAYPAL_CURRENCY?>" />
-							<input type="hidden" name="lc" value="<?=Config::PAYPAL_LOCATION?>" />
-							<input type="hidden" name="return" value="<?=sprintf(Config::PAYPAL_RETURN_URL, $_SESSION["LANG"])?>" />			
-							<input type="hidden" name="cbt" value="<?=Config::PAYPAL_RETURN_BUTTON_TEXT?>" />
-							<input type="hidden" name="cancel_return" value="<?=sprintf(Config::PAYPAL_RETURN_URL_FAIL, $_SESSION["LANG"])?>" />			
-							<input type="hidden" name="custom" value="" id="paycode" />
-						
+						<form action="/<?=$_SESSION["LANG"]?>/paynow" method="post" id="paypal_checkout">
 							<div class="alert alert-warning" role="alert">
 								<strong>ბალანსის შევსება:</strong>
 								<ul>
@@ -200,10 +184,7 @@ $_SESSION['protect_x'] = $string::random(4);
 							<div class="form-group">
 								<label for="">თანხა <font color="red">*</font></label>
 								<div class="input-group">
-									<input type="hidden" name="item_name_1" value="Deposit money" />
-									<input type="hidden" name="quantity_1" value="1" />
-									<input type="number" class="form-control" name="amount_1" placeholder="1" value="1" />
-									<input type="hidden" name="shipping_1" value="0" />
+									<input type="number" class="form-control" name="amount" placeholder="1" value="1" min="1" />
 								</div>
 							</div>
 
@@ -221,7 +202,7 @@ $_SESSION['protect_x'] = $string::random(4);
 							  	</div>
 							</div>
 
-							<button type="button" class="btn btn-primary mb-2 g-deposit" modal-title="შეტყობინება">
+							<button type="button" class="btn btn-primary mb-2 g-deposit2" modal-title="შეტყობინება">
 								<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
 								<span>შევსება</span>
 							</button>
