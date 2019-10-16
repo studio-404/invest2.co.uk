@@ -1,6 +1,6 @@
 {
-	"name":"MySql",
-	"desc":"MySql მონაცემთა ბაზა",
-	"url":"/mysql/cities",
-	"urlText":"რედაქტირება"
+	"name":"Php My Admin",
+	"desc":"phpmyadmin",
+	"url":"/mysql/1",
+	"urlText":"შესვლა"
 }

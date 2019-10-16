@@ -33,8 +33,6 @@ class Paynow extends Controller
 			$this->payAmount<=0 || 
 			$this->code!=$_SESSION["protect_x"]
 		){
-			// echo json_encode($this->out);
-			echo "x3";
 			exit;
 		}
 	}
@@ -43,13 +41,13 @@ class Paynow extends Controller
 	{
 		$api = new ApiContext(
 			new OAuthTokenCredential(
-				'Adn9YW3bLKSkrLVpnIj-iBtP4heYrBW9hjZQ6tFyqZvZlYOQEpBPO8V_X_f68sQ_5PAixekCtN8veF55',
-				'ENwARAywe4i0oRhuocyQo3fxd0chRSAnSNwvb5U9tSpKdSurqHzKwjAzIsDKwyWc8lNdzQbnWPn9vF1u'
+				Config::PAYPAL_CLIENT_SANDBOX,
+				Config::PAYPAL_SECRET_SANDBOX
 			)
 		);
 
 		$api->setConfig([
-			'mode'=>'sandbox',
+			'mode'=>'sandbox', //live
 			'http.ConnectionTimeOut' => 30,
 			'log.LogEnabled' => false,
 			'log.FileName' => '',
@@ -64,7 +62,7 @@ class Paynow extends Controller
 		$Payment = new Payment();
 		$RedirectUrls = new RedirectUrls();
 
-		$Payer->setPaymentMethod('paypal'); // 
+		$Payer->setPaymentMethod('paypal');
 
 		$Details->setShipping('0.00')
 		->setTax('0.00')
@@ -85,7 +83,6 @@ class Paynow extends Controller
 		->setCancelUrl('http://buu.ge/en/fail');
 
 		$Payment->setRedirectUrls($RedirectUrls);
-
 
 
 		try{

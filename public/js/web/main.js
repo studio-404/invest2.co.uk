@@ -1,3 +1,5 @@
+var sprintf = (str, ...argv) => !argv.length ? str : sprintf(str = str.replace(sprintf.token||"$", argv.shift()), ...argv);
+
 var serialize = function (form) {
 	var serialized = [];
 	for (var i = 0; i < form.elements.length; i++) {
@@ -46,8 +48,7 @@ var tempmodal = function(title, body, buttons){
 	html += '</div>';
 	html += '</div>';
 	html += '</div>';
-	/*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
-    <button type="button" class="btn btn-primary">Save changes</button>*/
+
     return html;
 };
 
@@ -432,7 +433,6 @@ var tempmodal = function(title, body, buttons){
 		});
 	};
 
-	//g-
 	if(typeof document.getElementsByClassName("g-deposit")[0] !== "undefined"){
 		document.getElementsByClassName("g-deposit")[0].addEventListener("click", (e) => {
 			document.getElementsByClassName("g-deposit")[0].childNodes[1].style.display = "inline-block";
@@ -506,5 +506,45 @@ var tempmodal = function(title, body, buttons){
 				}
 			};
 		});
+	};
+
+	if(typeof document.getElementsByClassName("timeleft")[0] !== "undefined"){
+		var timeleft = document.getElementsByClassName("timeleft");
+		
+		var interval = setInterval(function(){
+			for(var i = 0; i < timeleft.length; i++){
+				if(typeof timeleft[i] !== "undefined"){
+					var end = timeleft[i].getAttribute("data-end");
+					
+					var date = new Date();
+					var timestamp = Math.floor(date.getTime() / 1000);
+
+					var diff = end - timestamp;
+					var days = Math.floor(diff/(60*60*24));
+
+					var hours = Math.floor((diff-days*60*60*24)/(60*60));
+
+					var minute = Math.floor( 
+						( (diff - (days*60*60*24)) - (hours*60*60) ) / 60
+					);
+
+					var second = Math.floor( 
+						( (diff - (days*60*60*24)) - (hours*60*60) - (minute*60) )
+					);
+
+					timeleft[i].innerHTML = sprintf(
+						"<span>$</span> დღე <span>$</span> საათი <span>$</span> წუთი <span>$</span> წამი",
+						days,
+						hours, 
+						minute, 
+						second
+					);
+
+					if(days == 0 && hours == 0 && minute == 0 && second == 0){
+						location.reload();
+					}
+				}
+			}
+		}, 1000);
 	};
 })();

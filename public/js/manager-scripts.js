@@ -1,6 +1,6 @@
 var Config = {
-	website:"https://buu.ge/",
-	ajax:"https://buu.ge/ge/ajax/index", 
+	website:"https://invest2.co.uk.ge/",
+	ajax:"https://invest2.co.uk/ge/ajax/index", 
 	pleaseWait:"მოთხოვნა იგზავნება...",
 	mainLanguage:"ge"
 };
@@ -2285,10 +2285,38 @@ var editPayment = function(id){
 		}else{
 			var form = "<p>" + obj.form +"</p>";
 			$("#modal1 .modal-content").html(header + form);
-			// $("#attachModule").material_select();
+			$("#status").material_select();
 			$("#modalButton").attr({"onclick": obj.attr });
 			tiny(".tinymceTextArea");
 			scrollTop();		
 		}
 	});
 };
+
+
+function formPaymentEdit(id, lang){
+	var currency = $("#currency").val();
+	var amount_gel = $("#amount_gel").val();
+	var status = $("#status").val();
+
+	var ajaxFile = "/updatePayments";
+	$.ajax({
+		method: "POST",
+		url: Config.ajax + ajaxFile,
+		data: {  
+			id:id, 
+			currency:currency, 
+			amount_gel:amount_gel, 
+			status:status, 
+			lang:lang			 
+		}
+	}).done(function( msg ) {
+		var obj = $.parseJSON(msg);
+		if(obj.Success.Code==1){
+			$(".modal-message-box").html(obj.Success.Text);
+			scrollTop(); 
+		}else{
+			$(".modal-message-box").html(obj.Error.Text);
+		}
+	});	
+}

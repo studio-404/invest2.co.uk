@@ -19,11 +19,11 @@ class paymentview
 						<a href=\"javascript:void(0)\" onclick=\"editPayment('%s')\"><i class=\"material-icons tooltipped\" data-position=\"bottom\" data-delay=\"50\" data-tooltip=\"რედაქტირება\">mode_edit</i></a>
 						</td>
 					</tr>",
-					date("d/m/Y g:i:s", (int)$val['currenttime']), 
+					date("d/m/Y H:i:s", (int)$val['currenttime']), 
 					strip_output::index($val['usersId']), 
 					strip_output::index($val['usersMobile']), 
 					strip_output::index($val['amount']),
-					strip_output::index((float)$val['amount_gel']),
+					((float)$val['amount_gel']<=0) ? 'N/A' : strip_output::index((float)$val['amount_gel']),
 					strip_output::index($val['verify_sign']),
 					strip_output::index($val['id'])
 				);

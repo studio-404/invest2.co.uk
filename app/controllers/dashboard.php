@@ -48,7 +48,7 @@ class dashboard extends Controller
 			"/".$_SESSION["LANG"]."/dashboard/modules/".Config::DEFAULT_MODULE=>"მოდულები", 
 			// $_SESSION["LANG"]."/dashboard/catalog/3"=>"ტურები", 
 			"/".$_SESSION["LANG"]."/dashboard/users"=>"მომხმარებლები",
-			"/".$_SESSION["LANG"]."/dashboard/payments"=>"გადახდები",
+			"/".$_SESSION["LANG"]."/dashboard/payments"=>"ფინანსები",
 			"/".$_SESSION["LANG"]."/dashboard/comments"=>"კომენტარები",
 			"/".$_SESSION["LANG"]."/dashboard/plugins"=>"პლაგინები",			
 			// $_SESSION["LANG"]."/tasks"=>"გასაკეთებელი სია",			

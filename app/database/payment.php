@@ -55,6 +55,26 @@ class payment
 		return $prepare->rowCount();
 	}
 
+	private function updatePay($args)
+	{
+		$pay = "UPDATE `payment` SET
+		`currency_ex`=:currency_ex,
+		`amount_gel`=:amount_gel,
+		`status`=:status
+		WHERE 
+		`id`=:id
+		";
+		$prepare = $this->conn->prepare($pay);
+		$prepare->execute(array(
+			":currency_ex"=>$args["currency_ex"],
+			":amount_gel"=>$args["amount_gel"],
+			":status"=>$args["status"],
+			":id"=>$args["id"]
+		));
+
+		return $prepare->rowCount();
+	}
+
 	private function selectAll($args)
 	{
 		$fetch = array();
@@ -62,13 +82,12 @@ class payment
 		$from = (isset($_GET['pn']) && $_GET['pn']>0) ? (($_GET['pn']-1)*$itemPerPage) : 0;
 		
 		$select = "SELECT 
-		(SELECT COUNT(`id`) FROM `payment` WHERE `status`!=3) as counted, 
+		(SELECT COUNT(`id`) FROM `payment`) as counted, 
 		(SELECT `mobile` FROM `users_website` WHERE `users_website`.`id`=`payment`.`user_id`) as usersMobile, 
 		(SELECT `id` FROM `users_website` WHERE `users_website`.`id`=`payment`.`user_id`) as usersId, 
 		`payment`.* 
 		FROM 
 		`payment` 
-		WHERE `status`!=3
 		ORDER BY `currenttime` DESC LIMIT ".$from.",".$itemPerPage;	
 		$prepare = $this->conn->prepare($select); 
 		$prepare->execute();
@@ -83,6 +102,8 @@ class payment
 		$fetch = array();
 		$select = "SELECT 
 		(SELECT `mobile` FROM `users_website` WHERE `users_website`.`id`=`payment`.`user_id`) as usersMobile, 
+		(SELECT `firstname` FROM `users_website` WHERE `users_website`.`id`=`payment`.`user_id`) as usersFirstname, 
+		(SELECT `lastname` FROM `users_website` WHERE `users_website`.`id`=`payment`.`user_id`) as usersLastname, 
 		`payment`.* 
 		FROM 
 		`payment` 
@@ -100,7 +121,7 @@ class payment
 	private function mydeposite($args)
 	{
 		$select = "SELECT 
-		(SELECT SUM(`amount`) FROM `payment` WHERE `status`=3 AND `user_id`=:user_id) AS main,
+		(SELECT SUM(`amount_gel`) FROM `payment` WHERE `status`=3 AND `user_id`=:user_id) AS main,
 		SUM(`amount`) as sub 
 		FROM 
 		`payment` 

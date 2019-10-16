@@ -53,6 +53,12 @@ class Invest extends Controller
 		$headertop = $this->model('_top');
 		$headertop->data["navigationModule"] = $navigation->index();
 
+		/* investing */
+		$db_invest = new Database("modules", array(
+			"method"=>"selectActiveInvests", 
+			"type"=>"invest"
+		));
+
 		/*footer */
 		$footer = $this->model('_footer');
 
@@ -66,6 +72,7 @@ class Invest extends Controller
 			"headerModule"=>$header->index(), 
 			"headertop"=>$headertop->index(), 
 			"pageData"=>$db_pagedata->getter(), 
+			"invests"=>$db_invest->getter(), 
 			"footer"=>$footer->index()
 		]);
 	}

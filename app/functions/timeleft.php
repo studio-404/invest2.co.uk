@@ -5,27 +5,27 @@ class timeleft
 	public static function index($todate)
 	{
 		$diff = $todate - time();
+		
 		$days = floor($diff/(60*60*24));
-		$hours = round(($diff-$days*60*60*24)/(60*60));
-		if($_SESSION['LANG']=="ge"){
-			$out = sprintf(
-				"დარჩა %s დღე და %s საათი",
-				$days, 
-				$hours
-			);	
-		}else if($_SESSION['LANG']=="ru"){
-			$out = sprintf(
-				"Останавливался в течение %s дней и %s часов",
-				$days, 
-				$hours
-			);	
-		}else{
-			$out = sprintf(
-				"%s days %s hours remain",
-				$days, 
-				$hours
-			);
-		}
+
+		$hours = floor(($diff-$days*60*60*24)/(60*60));
+		
+		$minute = floor( 
+			( ($diff - ($days*60*60*24)) - ($hours*60*60) ) / 60
+		);
+
+		$second = floor( 
+			( ($diff - ($days*60*60*24)) - ($hours*60*60) - ($minute*60) )
+		);
+
+		$out = sprintf(
+			"<span>%s</span> დღე <span>%s</span> საათი <span>%s</span> წუთი <span>%s</span> წამი",
+			$days, 
+			$hours,
+			$minute,
+			$second
+		);
+
 		return $out;
 	}
 }

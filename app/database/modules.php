@@ -136,6 +136,50 @@ class modules
 		return json_decode($fetch, true);
 	}
 
+	private function selectActiveInvests($args)
+	{
+		$fetch = array();
+
+		$select = "SELECT 
+		`usefull`.*, 
+		(
+			SELECT 
+			COUNT(`usefull`.`idx`) 
+			FROM 
+			`usefull`
+			WHERE 
+			`usefull`.`date`>UNIX_TIMESTAMP() AND 
+			`usefull`.`additional1`='active' AND 
+			`usefull`.`type`=:type AND 
+			`usefull`.`visibility`!=:one AND 
+			`usefull`.`lang`=:lang AND 
+			`usefull`.`status`!=:one
+		) AS count, 
+		(SELECT `photos`.`path` FROM `photos` WHERE `photos`.`parent`=`usefull`.`idx` AND `photos`.`type`=`usefull`.`type` AND `photos`.`lang`=`usefull`.`lang` AND `photos`.`status`!=:one ORDER BY `photos`.`id` ASC LIMIT 1) AS photo,
+		(SELECT SUM(`userinvests`.`amount`) FROM `userinvests` WHERE `userinvests`.`prod_id`=`usefull`.`idx`) AS investedAmount
+		FROM 
+		`usefull` 
+		WHERE 
+		`usefull`.`date`>UNIX_TIMESTAMP() AND 
+		`usefull`.`additional1`='active' AND 
+		`usefull`.`type`=:type AND 
+		`usefull`.`visibility`!=:one AND 
+		`usefull`.`lang`=:lang AND 
+		`usefull`.`status`!=:one ORDER BY `usefull`.`date` ASC LIMIT 50";
+
+		$prepare = $this->conn->prepare($select);
+		$prepare->execute(array(
+			":type"=>$args['type'], 
+			":one"=>1,
+			":lang"=>$_SESSION["LANG"]
+		));
+		if($prepare->rowCount()){
+			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC);
+		}
+
+		return $fetch;
+	}
+
 	private function selectModuleByType($args)
 	{
 		$fetch = "[]";
@@ -595,7 +639,7 @@ class modules
 			}
 		}';
 		foreach ($fetch as $val) {
-			$insert = "INSERT INTO `usefull_modules` SET `idx`=:idx, `type`=:type, `title`=:title, `fields`=:fields, `lang`=:lang";
+			$insert = "INSERT INTO `usefull_modules` SET `idx`=:idx, `type`=:type, `title`=:title, `fields`=:fields, `lang`=:lang, `status`=0";
 			$prepare3 = $this->conn->prepare($insert);
 			$prepare3->execute(array(
 				":idx"=>$maxId,  
@@ -640,6 +684,7 @@ class modules
 		foreach ($fetch as $val) {
 			$insert = "INSERT INTO `usefull` SET 
 			`idx`=:idx, 
+			`cid`=:cid, 
 			`date`=:datex, 
 			`date_format`=:date_format, 
 			`type`=:type, 
@@ -653,10 +698,13 @@ class modules
 			`additional3`=:additional3, 
 			`additional4`=:additional4, 
 			`additional5`=:additional5, 
+			`visibility`=:visibility, 
+			`status`=:status, 
 			`lang`=:lang";
 			$prepare3 = $this->conn->prepare($insert);
 			$prepare3->execute(array(
 				":idx"=>$maxId, 
+				":cid"=>0, 
 				":datex"=>$date, 
 				":date_format"=>$date_format, 
 				":type"=>$type, 
@@ -670,6 +718,8 @@ class modules
 				":additional3"=>$additional3,
 				":additional4"=>$additional4,
 				":additional5"=>$additional5,
+				":visibility"=>0,
+				":status"=>0,
 				":lang"=>$val['title']
 			)); 
 

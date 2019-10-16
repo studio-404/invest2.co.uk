@@ -51,4 +51,9 @@ class strings
 		$out = str_replace($utf8, $lat, $string);
 		return $out;
 	}
+
+	public static function percentInvested($total, $invested)
+	{
+		return number_format((float)($invested/$total) * 100, 2, ".", "");
+	}
 }

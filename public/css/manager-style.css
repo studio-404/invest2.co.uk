@@ -158,3 +158,12 @@ table a{ color: #2bbbad; padding: 0 5px; }
     display: block;
   }
 }
+
+.execute{ border:solid 1px #555555; height: auto !important; }
+.sqlcommand{ border:solid 1px #555555; padding: 5px; min-height: 120px; }
+.sqlresult{ max-width: 100%; width: 100%; overflow-x: auto; }
+.result_table tr td,
+.result_table tr th{  
+  padding: 0 5px !important;
+  border: solid 1px #cccccc;
+}

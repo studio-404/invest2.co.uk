@@ -1,13 +1,4 @@
 <?php 
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Payer;
-use PayPal\Api\Details;
-use PayPal\Api\Amount;
-use PayPal\Api\Transaction;
-use PayPal\Api\Payment;
-use PayPal\Api\RedirectUrls;
-
 class Ok extends Controller
 {
 	public function __construct()
@@ -23,21 +14,6 @@ class Ok extends Controller
 	{
 		require_once 'app/functions/request.php';
 
-		$api = new ApiContext(
-			new OAuthTokenCredential(
-				'Adn9YW3bLKSkrLVpnIj-iBtP4heYrBW9hjZQ6tFyqZvZlYOQEpBPO8V_X_f68sQ_5PAixekCtN8veF55',
-				'ENwARAywe4i0oRhuocyQo3fxd0chRSAnSNwvb5U9tSpKdSurqHzKwjAzIsDKwyWc8lNdzQbnWPn9vF1u'
-			)
-		);
-
-		$api->setConfig([
-			'mode'=>'sandbox',
-			'http.ConnectionTimeOut' => 30,
-			'log.LogEnabled' => false,
-			'log.FileName' => '',
-			'log.LogLevel' => 'FINE',
-			'validation.level' => 'log'
-		]);
 		$pay_code = functions\request::index("GET", "paymentId");
 
 		$Database = new Database("payment", array(
